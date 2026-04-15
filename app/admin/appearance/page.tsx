@@ -39,7 +39,13 @@ export default async function AdminAppearancePage() {
       <SettingsList
         settings={appearance.data}
         emptyLabel="No appearance settings found. Add appearance.* keys in site_settings when CMS migrations are ready."
+        editable
+        keyPrefix="appearance."
       />
+      <p className="rounded-xl border border-border bg-card/90 px-4 py-3 text-xs text-muted-foreground">
+        Recommended launch keys: `appearance.hero` and `appearance.founder`.
+        Local `/images/...` paths work best; public remote URLs are also supported.
+      </p>
     </section>
   )
 }

@@ -8,79 +8,96 @@ export type ServiceItem = {
 
 export const CORE_SERVICES: ServiceItem[] = [
   {
-    id: "career-strategy",
-    title: "Career Strategy & Readiness",
+    id: "career-clarity",
+    title: "Career Clarity & Nurse Pivot Strategy",
     description:
-      "Clarify your best-fit Gulf pathway, timeline, and required milestones before applications begin.",
+      "Clarify the next chapter that fits your values, lifestyle, strengths, and long-term professional goals.",
     outcomes: [
-      "Personalized relocation strategy",
-      "Eligibility and licensing pathway mapping",
-      "Confidence from a clear timeline",
+      "Clear next-step strategy",
+      "Aligned role and market direction",
+      "Confidence in your transition timeline",
     ],
     idealFor:
-      "Nurses who feel overwhelmed and want expert direction before making costly mistakes.",
+      "Nurses who feel stuck, overwhelmed, or unsure whether to pursue clinical progression, remote work, or a wider career pivot.",
   },
   {
-    id: "documents-positioning",
-    title: "Documents, CV & Positioning",
+    id: "linkedin-positioning",
+    title: "LinkedIn Coaching & Personal Branding",
     description:
-      "Transform your profile into a compelling, employer-ready narrative aligned with Gulf hiring standards.",
+      "Strengthen how you show up online so recruiters, employers, and collaborators understand your value quickly.",
     outcomes: [
-      "Modernized CV and profile assets",
-      "Positioning statement for your experience",
-      "Targeted interview narrative preparation",
+      "Optimized LinkedIn positioning",
+      "Sharper professional narrative",
+      "Better visibility for aligned opportunities",
     ],
     idealFor:
-      "Nurses who need their strengths communicated clearly in competitive international markets.",
+      "Nurses who want a stronger digital presence, career credibility, and clearer positioning for modern healthcare roles.",
   },
   {
-    id: "interview-placement",
-    title: "Interview & Placement Coaching",
+    id: "remote-digital-health",
+    title: "Remote Work & Digital Health Transition",
     description:
-      "Practice high-stakes interview conversations and placement decisions with practical coaching support.",
+      "Translate bedside experience into roles across telehealth, care coordination, healthcare operations, informatics, and health tech.",
     outcomes: [
-      "Mock interviews with feedback",
-      "Offer evaluation and decision support",
-      "Negotiation confidence and professionalism",
+      "Transferable skills mapping",
+      "Remote-friendly positioning strategy",
+      "Digital health opportunity clarity",
     ],
     idealFor:
-      "Nurses approaching interviews or offers and wanting calm, strategic support.",
+      "Nurses exploring flexible work, healthcare innovation, or a path beyond traditional bedside roles.",
   },
   {
-    id: "relocation-execution",
-    title: "Relocation Execution Support",
+    id: "global-opportunities",
+    title: "Global Nursing Pathways",
     description:
-      "Get practical help with timelines, checklists, and transition priorities through your move.",
+      "Map realistic options across the US, UK, Canada, Australia, the Middle East, and Europe with practical next steps.",
     outcomes: [
-      "Structured relocation checklist",
-      "Risk and delay mitigation planning",
-      "Post-arrival transition guidance",
+      "Market and pathway comparison",
+      "Readiness and licensing planning",
+      "Smarter international decision-making",
     ],
     idealFor:
-      "Nurses ready to move and needing reliable support during a complex transition window.",
+      "Nurses considering relocation or international mobility and wanting a safer, more strategic approach.",
+  },
+  {
+    id: "interview-offer-support",
+    title: "Interview, Offer & Decision Coaching",
+    description:
+      "Prepare for interviews, evaluate opportunities, and make confident career decisions without rushing into the wrong move.",
+    outcomes: [
+      "Interview confidence and structure",
+      "Offer evaluation support",
+      "Stronger negotiation and decision clarity",
+    ],
+    idealFor:
+      "Nurses actively applying, interviewing, or weighing major career transitions across multiple directions.",
   },
 ]
 
 export const FIVE_P_FRAMEWORK = [
   {
     pillar: "Purpose",
-    detail: "Define your why, your target market, and your preferred career trajectory.",
+    detail:
+      "Define the kind of career, flexibility, impact, and lifestyle you want next.",
   },
   {
     pillar: "Preparation",
-    detail: "Build capability, documents, and confidence through a deliberate plan.",
+    detail:
+      "Build readiness through skills, documents, mindset, systems, and practical planning.",
   },
   {
     pillar: "Positioning",
-    detail: "Present your profile to stand out to Gulf employers and recruiters.",
+    detail:
+      "Present your value clearly across CVs, LinkedIn, interviews, and opportunity conversations.",
   },
   {
     pillar: "Placement",
-    detail: "Navigate interviews, offers, and placement decisions with strategic support.",
+    detail:
+      "Navigate applications, offers, remote roles, or international pathways with strategy and confidence.",
   },
   {
     pillar: "Progression",
     detail:
-      "Grow beyond relocation into long-term career acceleration and professional stability.",
+      "Grow beyond the first move into long-term visibility, sustainability, and career evolution.",
   },
 ] as const

@@ -88,7 +88,7 @@ export function createBlogCollectionSchema(posts: BlogPost[]) {
     "@type": "Blog",
     name: `${SITE_CONFIG.name} Blog`,
     description:
-      "Insights on Gulf nursing relocation, career strategy, and interview readiness.",
+      "Insights on nurse career pivots, digital health, LinkedIn strategy, and global opportunity planning.",
     url: toAbsoluteUrl("/blog"),
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",

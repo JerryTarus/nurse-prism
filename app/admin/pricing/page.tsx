@@ -15,7 +15,7 @@ export default async function AdminPricingPage() {
     <section className="space-y-4 lg:space-y-6">
       <DashboardHeader
         title="Pricing Configuration"
-        description="Maintain package values and activation states for consultation, relocation, and program products."
+        description="Maintain package values and activation states for consultation, transition, and program products."
         cmsReady={packages.cmsReady}
         isSuperAdmin={access.isSuperAdmin}
       />
@@ -38,8 +38,9 @@ export default async function AdminPricingPage() {
 
       <PricingConfigTable packages={packages.data} />
       <p className="rounded-xl border border-border bg-card/90 px-4 py-3 text-xs text-muted-foreground">
-        Currency conversion multipliers are controlled from public pricing config.
-        A dedicated admin editor is prepared for a future phase with audit logging.
+        Currency conversion multipliers are still controlled from public pricing
+        config. Package edits in Supabase now drive the public pricing pages and
+        consultation checkout flow.
       </p>
     </section>
   )

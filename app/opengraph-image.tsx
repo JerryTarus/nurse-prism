@@ -46,10 +46,10 @@ export default function OpenGraphImage() {
               maxWidth: "90%",
             }}
           >
-            Illuminate Your Global Nursing Career
+            Transforming Nursing Careers Beyond the Bedside
           </div>
           <div style={{ fontSize: 28, opacity: 0.9 }}>
-            Premium Gulf Career Coaching Platform
+            Clarity, remote pathways, digital health, and global opportunities
           </div>
         </div>
         <div style={{ fontSize: 22, opacity: 0.84 }}>{SITE_CONFIG.email}</div>

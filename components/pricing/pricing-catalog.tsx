@@ -1,17 +1,20 @@
 "use client"
 
-import { PRICING_CATEGORIES } from "@/data/pricing"
 import { useCurrency } from "@/hooks/use-currency"
-import { type PricingCategoryId } from "@/types/pricing"
+import type { PricingCategory, PricingCategoryId } from "@/types/pricing"
 
 import { CurrencySwitcher } from "./currency-switcher"
 import { PricingCard } from "./pricing-card"
 
 type PricingCatalogProps = {
   highlightedCategory?: PricingCategoryId
+  pricingCategories: PricingCategory[]
 }
 
-export function PricingCatalog({ highlightedCategory }: PricingCatalogProps) {
+export function PricingCatalog({
+  highlightedCategory,
+  pricingCategories,
+}: PricingCatalogProps) {
   const { currency, setCurrency } = useCurrency("KES")
 
   return (
@@ -29,7 +32,7 @@ export function PricingCatalog({ highlightedCategory }: PricingCatalogProps) {
         <CurrencySwitcher value={currency} onChange={setCurrency} />
       </div>
 
-      {PRICING_CATEGORIES.map((category) => (
+      {pricingCategories.map((category) => (
         <section
           key={category.id}
           className="space-y-4"

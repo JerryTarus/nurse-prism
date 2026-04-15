@@ -1,15 +1,21 @@
 "use client"
 
-import { PRICING_CATEGORIES } from "@/data/pricing"
 import { useCurrency } from "@/hooks/use-currency"
+import type { PricingCategory } from "@/types/pricing"
 
 import { CurrencySwitcher } from "./currency-switcher"
 import { PricingCard } from "./pricing-card"
 
-export function ProgramPricingPanel() {
+type ProgramPricingPanelProps = {
+  pricingCategories: PricingCategory[]
+}
+
+export function ProgramPricingPanel({
+  pricingCategories,
+}: ProgramPricingPanelProps) {
   const { currency, setCurrency } = useCurrency("KES")
   const programPlans =
-    PRICING_CATEGORIES.find((category) => category.id === "program")?.plans ?? []
+    pricingCategories.find((category) => category.id === "program")?.plans ?? []
 
   return (
     <div className="space-y-4">
@@ -26,7 +32,7 @@ export function ProgramPricingPanel() {
       </div>
       <p className="text-xs text-muted-foreground">
         Non-KES values are estimated planning values and may differ slightly at
-        checkout.
+        PayPal checkout.
       </p>
     </div>
   )

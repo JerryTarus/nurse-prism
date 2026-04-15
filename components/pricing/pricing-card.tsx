@@ -1,7 +1,6 @@
-import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 import { formatCurrencyAmount } from "@/lib/currency"
 import { cn } from "@/lib/utils"
 import type { PricingPlan, SupportedCurrency } from "@/types/pricing"
@@ -53,9 +52,18 @@ export function PricingCard({ plan, currency, className }: PricingCardProps) {
         ))}
       </ul>
 
-      <Button asChild className="mt-6 w-full">
-        <Link href={plan.ctaHref}>{plan.ctaLabel}</Link>
-      </Button>
+      <TrackedButtonLink
+        href={plan.ctaHref}
+        eventName="cta_click"
+        eventParams={{
+          placement: "pricing_card",
+          plan_id: plan.id,
+          plan_name: plan.name,
+        }}
+        className="mt-6 w-full"
+      >
+        {plan.ctaLabel}
+      </TrackedButtonLink>
     </article>
   )
 }

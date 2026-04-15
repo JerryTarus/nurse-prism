@@ -1,18 +1,26 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-
-import { PRICING_CATEGORIES } from "@/data/pricing"
-import { useCurrency } from "@/hooks/use-currency"
-import { Button } from "@/components/ui/button"
+import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 import { CurrencySwitcher } from "@/components/pricing/currency-switcher"
 import { PricingCard } from "@/components/pricing/pricing-card"
+import { useCurrency } from "@/hooks/use-currency"
+import type { PricingCategory } from "@/types/pricing"
 
-export function PricingPreviewSection() {
+type PricingPreviewSectionProps = {
+  pricingCategories: PricingCategory[]
+  heading?: {
+    title: string
+    content: string
+  }
+}
+
+export function PricingPreviewSection({
+  pricingCategories,
+  heading,
+}: PricingPreviewSectionProps) {
   const { currency, setCurrency } = useCurrency("KES")
   const relocationPlans =
-    PRICING_CATEGORIES.find((category) => category.id === "relocation")?.plans ?? []
+    pricingCategories.find((category) => category.id === "relocation")?.plans ?? []
 
   return (
     <section className="np-container py-10 sm:py-12">
@@ -22,11 +30,12 @@ export function PricingPreviewSection() {
             Pricing
           </p>
           <h2 className="font-heading mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
-            Choose the support level that matches your relocation pace
+            {heading?.title ??
+              "Choose the support level that matches your transition pace"}
           </h2>
           <p className="mt-2 max-w-3xl text-muted-foreground">
-            Transparent pricing with clear outcomes. The Professional Plan is our
-            most selected option for balanced speed and depth.
+            {heading?.content ??
+              "Transparent pricing with clear outcomes. The Professional Plan is our most selected option for balanced depth, visibility, and momentum."}
           </p>
         </div>
         <CurrencySwitcher value={currency} onChange={setCurrency} />
@@ -42,12 +51,14 @@ export function PricingPreviewSection() {
         <p className="text-xs text-muted-foreground">
           Non-KES values are estimates based on controlled internal planning rates.
         </p>
-        <Button asChild variant="outline">
-          <Link href="/pricing">
-            Explore Full Pricing
-            <ArrowRight className="size-4" />
-          </Link>
-        </Button>
+        <TrackedButtonLink
+          href="/pricing"
+          eventName="cta_click"
+          eventParams={{ placement: "pricing_preview", cta: "explore_full_pricing" }}
+          variant="outline"
+        >
+          Explore Full Pricing
+        </TrackedButtonLink>
       </div>
     </section>
   )

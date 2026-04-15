@@ -6,6 +6,7 @@ import { NURSE_SOURCE_COUNTRIES } from "@/data/countries"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { trackEvent } from "@/lib/analytics/google"
 
 const initialState = {
   name: "",
@@ -19,10 +20,12 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   )
+  const [message, setMessage] = useState<string | null>(null)
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setStatus("loading")
+    setMessage(null)
 
     try {
       const response = await fetch("/api/contact", {
@@ -31,23 +34,45 @@ export function ContactForm() {
         body: JSON.stringify(form),
       })
 
+      const payload = (await response.json().catch(() => null)) as
+        | { message?: string; error?: string }
+        | null
+
       if (!response.ok) {
-        throw new Error("Request failed")
+        throw new Error(payload?.error ?? "Request failed")
       }
 
       setStatus("success")
+      setMessage(
+        payload?.message ?? "Message sent. Nurse Prism will reply via email."
+      )
+      trackEvent("contact_submit", {
+        source: "contact_form",
+        country: form.country,
+      })
       setForm(initialState)
-    } catch {
+    } catch (error) {
       setStatus("error")
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Submission failed. Please try again shortly."
+      )
     }
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border border-border/80 bg-card/95 p-5 sm:p-6">
-      <h2 className="font-heading text-xl font-semibold text-foreground">Send a Message</h2>
+    <form
+      onSubmit={onSubmit}
+      className="space-y-4 rounded-2xl border border-border/80 bg-card/95 p-5 sm:p-6"
+    >
+      <h2 className="font-heading text-xl font-semibold text-foreground">
+        Send a Message
+      </h2>
       <p className="text-sm text-muted-foreground">
-        Tell us about your current stage, your preferred Gulf destination, and
-        where you need the most support.
+        Tell us about your current stage, target direction, and where you need
+        the most support across global opportunities, remote work, or career
+        transition.
       </p>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -116,20 +141,24 @@ export function ContactForm() {
           onChange={(event) =>
             setForm((current) => ({ ...current, message: event.target.value }))
           }
-          placeholder="Share your target country, timeline, and any challenge you need help with."
+          placeholder="Share your target path, timeline, and any challenge you need help with."
         />
       </div>
 
-      <Button type="submit" className="h-10 w-full sm:w-auto" disabled={status === "loading"}>
+      <Button
+        type="submit"
+        className="h-10 w-full sm:w-auto"
+        disabled={status === "loading"}
+      >
         {status === "loading" ? "Submitting..." : "Send Message"}
       </Button>
 
       <p className="text-xs text-muted-foreground">
         {status === "success"
-          ? "Message sent. We will respond via email."
+          ? message
           : status === "error"
-            ? "Submission failed. Please try again shortly."
-            : "By submitting, you agree to be contacted about coaching options."}
+            ? message
+            : "By submitting, you agree to be contacted about coaching and career support options."}
       </p>
     </form>
   )

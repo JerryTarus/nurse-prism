@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { trackEvent } from "@/lib/analytics/google"
 import { cn } from "@/lib/utils"
 
 type LeadCaptureFormProps = {
@@ -15,10 +16,12 @@ export function LeadCaptureForm({ className }: LeadCaptureFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   )
+  const [message, setMessage] = useState<string | null>(null)
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setStatus("loading")
+    setMessage(null)
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -27,21 +30,37 @@ export function LeadCaptureForm({ className }: LeadCaptureFormProps) {
         body: JSON.stringify({ email, source: "lead-capture" }),
       })
 
+      const payload = (await response.json().catch(() => null)) as
+        | { message?: string; error?: string }
+        | null
+
       if (!response.ok) {
-        throw new Error("Request failed")
+        throw new Error(payload?.error ?? "Request failed")
       }
 
       setStatus("success")
+      setMessage(
+        payload?.message ?? "You are on the list for Nurse Prism career insights."
+      )
+      trackEvent("lead_submit", {
+        source: "newsletter",
+        placement: "lead_capture",
+      })
       setEmail("")
-    } catch {
+    } catch (error) {
       setStatus("error")
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "We could not submit right now. Please try again shortly."
+      )
     }
   }
 
   return (
     <form onSubmit={onSubmit} className={cn("space-y-3", className)}>
       <label htmlFor="lead-email" className="text-sm font-medium text-foreground">
-        Get weekly Gulf career insights
+        Get weekly nurse pivot insights
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
@@ -53,16 +72,20 @@ export function LeadCaptureForm({ className }: LeadCaptureFormProps) {
           placeholder="Enter your best email"
           className="h-10"
         />
-        <Button type="submit" className="h-10 sm:px-5" disabled={status === "loading"}>
+        <Button
+          type="submit"
+          className="h-10 sm:px-5"
+          disabled={status === "loading"}
+        >
           {status === "loading" ? "Joining..." : "Join Free"}
         </Button>
       </div>
       <p className="text-xs text-muted-foreground">
         {status === "success"
-          ? "You are in. Check your inbox for your first coaching insight."
+          ? message
           : status === "error"
-            ? "We could not submit right now. Please try again shortly."
-            : "No spam. Just practical strategy for internationally trained nurses."}
+            ? message
+            : "No spam. Just practical strategy for nurses exploring global, remote, and non-traditional career paths."}
       </p>
     </form>
   )

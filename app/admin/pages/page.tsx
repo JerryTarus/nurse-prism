@@ -37,6 +37,14 @@ export default async function AdminPagesPage() {
       </div>
 
       <PageSectionsTable sections={sections.data} />
+      <p className="rounded-xl border border-border bg-card/90 px-4 py-3 text-xs text-muted-foreground">
+        Suggested combinations: page key `home` with section keys `hero`,
+        `hero-note`, `services`, `about-preview`, `pricing-preview`, and `cta`;
+        page key `about` with `intro`, `mission`, `promise`, and `framework`;
+        page key `services` with `intro`, `services-grid`, and `process`; page
+        key `program` with `intro`, `outcomes`, `curriculum`, and `investment`;
+        page key `pricing` with `intro`; and page key `contact` with `intro`.
+      </p>
     </section>
   )
 }

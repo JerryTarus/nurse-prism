@@ -36,7 +36,7 @@ export function formatCurrencyAmount(
     maximumFractionDigits: 0,
   }).format(converted)
 
-  return withEstimatePrefix ? `≈ ${formatted}` : formatted
+  return withEstimatePrefix ? `Approx. ${formatted}` : formatted
 }
 
 export function detectPreferredCurrency(locale?: string): SupportedCurrency {

@@ -3,24 +3,28 @@ import type { Metadata } from "next"
 import { BlogCard } from "@/components/blog/blog-card"
 import { JsonLd } from "@/components/shared/json-ld"
 import { getPublishedBlogPosts } from "@/lib/cms/blog"
-import { createPageMetadata } from "@/lib/seo/metadata"
+import { createManagedPageMetadata } from "@/lib/seo/metadata"
 import { createBlogCollectionSchema } from "@/lib/seo/structured-data"
 
 type BlogPageProps = {
   searchParams: Promise<{ q?: string }>
 }
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Blog",
-  description:
-    "Read Nurse Prism insights on Gulf nursing relocation, profile positioning, and interview strategy.",
-  path: "/blog",
-  keywords: [
-    "nursing career blog",
-    "gulf nurse relocation tips",
-    "nurse interview guidance",
-  ],
-})
+export async function generateMetadata(): Promise<Metadata> {
+  return createManagedPageMetadata({
+    pageKey: "blog",
+    title: "Blog",
+    description:
+      "Read Nurse Prism insights on career pivots, digital health, LinkedIn strategy, global opportunities, and growth beyond traditional nursing roles.",
+    path: "/blog",
+    keywords: [
+      "nursing career blog",
+      "nurse career pivot advice",
+      "digital health nursing insights",
+      "nurse LinkedIn strategy",
+    ],
+  })
+}
 
 export default async function BlogIndexPage({ searchParams }: BlogPageProps) {
   const rawQuery = ((await searchParams).q ?? "").trim()
@@ -47,8 +51,8 @@ export default async function BlogIndexPage({ searchParams }: BlogPageProps) {
           Practical guidance for your global nursing career
         </h1>
         <p className="mt-3 max-w-3xl text-muted-foreground">
-          Explore strategy notes on relocation, interviews, and profile
-          positioning for Gulf opportunities.
+          Explore strategy notes on career transitions, remote opportunities,
+          LinkedIn visibility, interviews, and international pathways.
         </p>
 
         <form method="get" className="mt-5 max-w-lg">

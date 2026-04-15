@@ -5,44 +5,75 @@ import { ArrowRight } from "lucide-react"
 import { CtaSection } from "@/components/sections/cta-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { Button } from "@/components/ui/button"
-import { createPageMetadata } from "@/lib/seo/metadata"
+import {
+  getPublicPageSections,
+  getPublicSiteSettings,
+  resolvePublicSection,
+  resolvePublicSetting,
+} from "@/lib/cms/public-content"
+import { SITE_CONFIG } from "@/lib/constants"
+import { createManagedPageMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Services",
-  description:
-    "Explore Nurse Prism services for strategy, positioning, interview preparation, and relocation execution for Gulf nursing opportunities.",
-  path: "/services",
-  keywords: [
-    "nurse relocation services",
-    "gulf nursing coaching",
-    "nurse interview preparation",
-  ],
-})
+export async function generateMetadata(): Promise<Metadata> {
+  return createManagedPageMetadata({
+    pageKey: "services",
+    title: "Services",
+    description:
+      "Explore Nurse Prism services for career clarity, LinkedIn coaching, remote and digital health pivots, global opportunities, and interview support.",
+    path: "/services",
+    keywords: [
+      "nurse career coaching services",
+      "LinkedIn coaching for nurses",
+      "remote nursing transition support",
+    ],
+  })
+}
 
 const processSteps = [
   {
-    title: "Diagnostic Consultation",
+    title: "Career Diagnostic",
     detail:
-      "We assess your current readiness, experience profile, and preferred Gulf destination.",
+      "We assess your current stage, goals, strengths, blockers, and the kind of work life you want next.",
   },
   {
-    title: "Strategic Plan",
+    title: "Strategic Roadmap",
     detail:
-      "You receive a prioritized roadmap with practical actions, timelines, and milestones.",
+      "You receive a prioritized direction with practical actions, timelines, and the best-fit path for your pivot.",
   },
   {
-    title: "Execution Support",
+    title: "Positioning Support",
     detail:
-      "We coach you through profile updates, interview prep, and decision checkpoints.",
+      "We strengthen your narrative across CVs, LinkedIn, interviews, and applications so your value is clear.",
   },
   {
-    title: "Placement Momentum",
+    title: "Execution Momentum",
     detail:
-      "You gain guidance on offer decisions, relocation confidence, and career progression.",
+      "You move forward with coaching support around opportunities, decisions, and confident career action.",
   },
 ]
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const [sections, settings] = await Promise.all([
+    getPublicPageSections("services"),
+    getPublicSiteSettings(),
+  ])
+
+  const intro = resolvePublicSection(sections, "intro", {
+    title: "Coaching built for nurses navigating real career change",
+    content:
+      "Whether you need quick clarity, stronger positioning, or a high-support transition strategy, Nurse Prism services are designed to reduce confusion and accelerate aligned action.",
+  })
+  const servicesHeading = resolvePublicSection(sections, "services-grid", {
+    title: "Practical support for every stage of your nurse pivot",
+    content:
+      "Choose focused coaching for clarity, LinkedIn strategy, remote roles, global opportunities, and confident career decisions.",
+  })
+  const process = resolvePublicSection(sections, "process", {
+    title: "How our coaching process works",
+    content:
+      "Every support path is designed to move you from uncertainty to clear action with the right pace, structure, and visibility.",
+  })
+
   return (
     <>
       <section className="np-container pb-6 pt-10 sm:pt-14">
@@ -51,13 +82,9 @@ export default function ServicesPage() {
             Services
           </p>
           <h1 className="font-heading mt-2 text-3xl font-semibold text-foreground sm:text-4xl">
-            Premium coaching designed for internationally trained nurses
+            {intro.title}
           </h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            Whether you need quick clarity or full relocation support, Nurse
-            Prism services are built to reduce confusion and accelerate confident
-            action.
-          </p>
+          <p className="mt-3 max-w-3xl text-muted-foreground">{intro.content}</p>
           <Button asChild className="mt-5">
             <Link href="/pricing">
               Compare Pricing Options
@@ -67,12 +94,13 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <ServicesSection mode="full" />
+      <ServicesSection mode="full" heading={servicesHeading} />
 
       <section className="np-container py-10 sm:py-12">
         <h2 className="font-heading text-2xl font-semibold text-foreground sm:text-3xl">
-          How our coaching process works
+          {process.title}
         </h2>
+        <p className="mt-2 max-w-3xl text-muted-foreground">{process.content}</p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {processSteps.map((step, index) => (
             <article
@@ -93,7 +121,20 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <CtaSection />
+      <CtaSection
+        primaryCta={{
+          label: resolvePublicSetting(
+            settings,
+            "cta.primary_label",
+            "Start Your Nurse Pivot"
+          ),
+          href: resolvePublicSetting(
+            settings,
+            "cta.primary_href",
+            SITE_CONFIG.consultationHref
+          ),
+        }}
+      />
     </>
   )
 }

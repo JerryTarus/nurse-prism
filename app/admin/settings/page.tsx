@@ -40,7 +40,14 @@ export default async function AdminSettingsPage() {
       <SettingsList
         settings={settings.data}
         emptyLabel="No settings found yet. Add site_settings rows after migrations to manage integrations."
+        editable
       />
+      <p className="rounded-xl border border-border bg-card/90 px-4 py-3 text-xs text-muted-foreground">
+        Recommended launch keys: `contact.email`, `contact.consultation_window`,
+        `contact.response_time`, `hero.primary_cta_label`, `hero.primary_cta_href`,
+        `hero.secondary_cta_label`, `hero.secondary_cta_href`, `cta.primary_label`,
+        and `cta.primary_href`.
+      </p>
 
       <ResendEmailForm />
     </section>

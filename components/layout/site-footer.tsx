@@ -14,21 +14,24 @@ export function SiteFooter() {
         <div className="space-y-4">
           <Link
             href="/"
-            className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Nurse Prism home"
           >
             <Image
-              src="/images/logos/nurse-prism-wordmark.svg"
-              alt="Nurse Prism"
-              width={186}
-              height={36}
-              className="h-9 w-auto"
+              src="/images/logos/nurse-prism-mark.svg"
+              alt="Nurse Prism mark"
+              width={34}
+              height={34}
+              className="h-[34px] w-[34px]"
             />
+            <span className="font-heading text-lg font-semibold tracking-tight text-primary">
+              {SITE_CONFIG.name}
+            </span>
           </Link>
           <p className="max-w-md text-sm leading-6 text-muted-foreground">
-            {SITE_CONFIG.tagline}. We coach internationally trained nurses toward
-            confident Gulf career transitions through strategy, systems, and
-            supportive mentorship.
+            {SITE_CONFIG.tagline}. We coach nurses toward clearer, more aligned
+            careers across remote work, digital health, international
+            opportunities, and growth beyond traditional roles.
           </p>
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <a

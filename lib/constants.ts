@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   name: "Nurse Prism",
-  tagline: "Illuminate Your Global Nursing Career",
+  tagline: "Transforming Nursing Careers Beyond the Bedside",
   description:
-    "Premium healthcare career coaching for internationally trained nurses pursuing Gulf opportunities.",
+    "Career coaching, LinkedIn strategy, digital health insight, and global opportunity guidance for nurses exploring remote, tech, international, and non-traditional roles.",
   email: "nurseprism@gmail.com",
   linkedIn: "https://www.linkedin.com/in/chepkirui-kosgei-9b87a6129/",
   facebook: "https://www.facebook.com/share/177StfgPNC/",

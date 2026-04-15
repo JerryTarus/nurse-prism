@@ -19,10 +19,10 @@ export function TestimonialsSection() {
             className="rounded-2xl border border-border/80 bg-card/95 p-5"
           >
             <p className="text-sm leading-6 text-foreground/90">
-              “{testimonial.quote}”
+              &quot;{testimonial.quote}&quot;
             </p>
             <p className="mt-4 text-sm font-semibold text-foreground">
-              {testimonial.name} • {testimonial.role}
+              {testimonial.name} | {testimonial.role}
             </p>
             <p className="text-xs text-muted-foreground">{testimonial.country}</p>
             <p className="mt-2 text-xs font-medium text-primary">{testimonial.result}</p>

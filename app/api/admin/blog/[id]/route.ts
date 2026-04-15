@@ -133,3 +133,63 @@ export async function PATCH(
     { status: 200 }
   )
 }
+
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const auth = await requireAdminMfa()
+  if (auth.error) {
+    return auth.error
+  }
+
+  const { id } = await context.params
+  if (!id) {
+    return NextResponse.json({ error: "Post id is required." }, { status: 400 })
+  }
+
+  const ip = getRequestIp(request.headers)
+  const limiter = enforceRateLimit(
+    `admin:blog:delete:${ip}:${auth.user?.id}`,
+    BLOG_WRITE_RATE_LIMIT
+  )
+  if (!limiter.ok) {
+    return NextResponse.json(
+      {
+        error: "Rate limit exceeded. Please retry shortly.",
+        retryAfterSeconds: limiter.retryAfterSeconds,
+      },
+      { status: 429 }
+    )
+  }
+
+  const adminClient = createSupabaseAdminClient() as unknown as {
+    from: (table: string) => {
+      delete: () => {
+        eq: (column: string, value: string) => Promise<{
+          error: { message?: string } | null
+        }>
+      }
+    }
+  }
+
+  const { error } = await adminClient.from("blog_posts").delete().eq("id", id)
+
+  if (error) {
+    return NextResponse.json(
+      {
+        error:
+          error.message ??
+          "Unable to delete blog post. Ensure `blog_posts` table exists and service role is configured.",
+      },
+      { status: 500 }
+    )
+  }
+
+  return NextResponse.json(
+    {
+      redirectTo: "/admin/blog?status=deleted",
+    },
+    { status: 200 }
+  )
+}

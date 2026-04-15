@@ -11,7 +11,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "Coaching",
     question: "Who is Nurse Prism designed for?",
     answer:
-      "Nurse Prism supports internationally trained nurses targeting career opportunities across Gulf countries. Whether you are just starting or preparing for interviews, the coaching is tailored to your stage.",
+      "Nurse Prism supports nurses exploring aligned growth across remote work, digital health, LinkedIn visibility, international pathways, and career transitions beyond traditional bedside roles.",
   },
   {
     id: "faq-2",
@@ -46,6 +46,6 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "Coaching",
     question: "How long does coaching support last?",
     answer:
-      "Support duration depends on your selected plan. Strategy sessions include focused planning, while relocation and program plans include longer accountability support windows.",
+      "Support duration depends on your selected plan. Strategy sessions are focused and intensive, while coaching packages and program plans include longer accountability support windows.",
   },
 ]

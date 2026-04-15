@@ -1,16 +1,28 @@
-import Link from "next/link"
-import { ArrowRight, Compass, FileCheck2, PlaneTakeoff, Stethoscope } from "lucide-react"
+import {
+  Compass,
+  Globe2,
+  Laptop2,
+  Linkedin,
+  MessageSquareQuote,
+} from "lucide-react"
 
+import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 import { CORE_SERVICES } from "@/data/services"
-import { Button } from "@/components/ui/button"
 
 type ServicesSectionProps = {
   mode?: "preview" | "full"
+  heading?: {
+    title: string
+    content: string
+  }
 }
 
-const iconMap = [Compass, FileCheck2, Stethoscope, PlaneTakeoff]
+const iconMap = [Compass, Linkedin, Laptop2, Globe2, MessageSquareQuote]
 
-export function ServicesSection({ mode = "preview" }: ServicesSectionProps) {
+export function ServicesSection({
+  mode = "preview",
+  heading,
+}: ServicesSectionProps) {
   const visibleServices =
     mode === "preview" ? CORE_SERVICES.slice(0, 3) : CORE_SERVICES
 
@@ -22,24 +34,26 @@ export function ServicesSection({ mode = "preview" }: ServicesSectionProps) {
             Services
           </p>
           <h2 className="font-heading mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
-            Practical support at every stage of your Gulf transition
+            {heading?.title ?? "Practical support for every stage of your nurse pivot"}
           </h2>
           <p className="mt-2 max-w-3xl text-muted-foreground">
-            Choose focused consultations or complete coaching pathways designed
-            for internationally trained nurses.
+            {heading?.content ??
+              "Choose focused coaching for clarity, LinkedIn strategy, remote roles, global opportunities, and confident career decisions."}
           </p>
         </div>
         {mode === "preview" ? (
-          <Button asChild variant="outline">
-            <Link href="/services">
-              View All Services
-              <ArrowRight className="size-4" />
-            </Link>
-          </Button>
+          <TrackedButtonLink
+            href="/services"
+            eventName="cta_click"
+            eventParams={{ placement: "services_preview", cta: "view_all_services" }}
+            variant="outline"
+          >
+            View All Services
+          </TrackedButtonLink>
         ) : null}
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         {visibleServices.map((service, index) => {
           const Icon = iconMap[index % iconMap.length]
           return (
@@ -60,7 +74,7 @@ export function ServicesSection({ mode = "preview" }: ServicesSectionProps) {
               </p>
               <ul className="mt-3 space-y-1.5 text-xs text-foreground/90">
                 {service.outcomes.map((outcome) => (
-                  <li key={outcome}>• {outcome}</li>
+                  <li key={outcome}>- {outcome}</li>
                 ))}
               </ul>
             </article>

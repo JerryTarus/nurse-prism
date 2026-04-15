@@ -26,6 +26,6 @@ export const FOOTER_NAV_ITEMS: NavItem[] = [
 ]
 
 export const CONSULTATION_CTA = {
-  label: "Book Consultation",
+  label: "Start Your Nurse Pivot",
   href: SITE_CONFIG.consultationHref,
 } as const

@@ -49,34 +49,34 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
     id: "consultation",
     title: "Consultation",
     description:
-      "Start with the right strategy before spending time or money in the wrong direction.",
+      "Start with clarity before spending time or money in the wrong direction.",
     plans: [
       {
         id: "free-clarity-call",
         name: "Free Clarity Call",
         summary:
-          "A focused conversation to identify your starting point and map the safest next step.",
+          "A focused conversation to understand where you are, what you want next, and the safest first move.",
         basePriceKes: 0,
         ctaLabel: "Book Free Call",
         ctaHref: "/contact?intent=free-clarity-call",
         features: [
           "20-minute introductory review",
-          "Eligibility and readiness checkpoint",
-          "Next-step action snapshot",
+          "Current-stage clarity check",
+          "Recommended next-step direction",
         ],
       },
       {
         id: "paid-strategy-session",
         name: "Paid Strategy Session",
         summary:
-          "Deep planning session for your full Gulf pathway and practical execution timeline.",
+          "Deep planning session for your career pivot, global options, remote ambitions, or next-step execution timeline.",
         basePriceKes: 10000,
         ctaLabel: "Book Strategy Session",
         ctaHref: "/contact?intent=strategy-session",
         features: [
           "60-minute strategy consultation",
           "Personalized roadmap document",
-          "Document and timeline planning",
+          "Career pathway and positioning review",
           "Priority follow-up summary",
         ],
       },
@@ -84,21 +84,21 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
   },
   {
     id: "relocation",
-    title: "Relocation Packages",
+    title: "Career Transition Packages",
     description:
-      "End-to-end support tailored to your urgency, confidence level, and career target.",
+      "Structured support for nurses building stronger positioning, clearer applications, and more confident transitions.",
     plans: [
       {
         id: "starter-plan",
         name: "Starter Plan",
         summary:
-          "Essential support for nurses who want clear direction and accountability.",
+          "Essential support for nurses who need clarity, accountability, and a practical launch strategy.",
         basePriceKes: 25000,
         ctaLabel: "Choose Starter",
         ctaHref: "/contact?intent=starter-plan",
         features: [
-          "CV and profile review",
-          "Target-country readiness checklist",
+          "CV and positioning review",
+          "Target-market readiness checklist",
           "Interview preparation basics",
           "Email support for 30 days",
         ],
@@ -107,7 +107,7 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
         id: "professional-plan",
         name: "Professional Plan",
         summary:
-          "The most balanced package for applicants who want speed, structure, and confidence.",
+          "The most balanced package for nurses who want sharper visibility, stronger strategy, and consistent momentum.",
         basePriceKes: 60000,
         ctaLabel: "Choose Professional",
         ctaHref: "/contact?intent=professional-plan",
@@ -116,25 +116,25 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
         features: [
           "Everything in Starter",
           "Advanced interview simulations",
-          "Document flow and compliance support",
-          "Employer-facing positioning strategy",
+          "LinkedIn and digital presence strategy",
           "Priority mentorship for 60 days",
+          "Opportunity decision support",
         ],
       },
       {
         id: "elite-plan",
         name: "Elite Plan",
         summary:
-          "Premium, high-touch support for ambitious candidates pursuing accelerated placement.",
+          "Premium, high-touch support for ambitious nurses navigating major transitions with speed and depth.",
         basePriceKes: 120000,
         ctaLabel: "Choose Elite",
         ctaHref: "/contact?intent=elite-plan",
         features: [
           "Everything in Professional",
           "Weekly private coaching calls",
-          "Personal brand and negotiation coaching",
+          "High-visibility positioning support",
           "Priority communication turnaround",
-          "Placement readiness oversight",
+          "Hands-on career decision guidance",
         ],
       },
     ],
@@ -143,13 +143,13 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
     id: "program",
     title: "Nurse Prism Program",
     description:
-      "Guided transformation through the Nurse Prism 5P framework with practical implementation support.",
+      "A guided transformation framework for nurses pursuing aligned growth beyond one narrow career path.",
     plans: [
       {
         id: "standard-program",
         name: "Standard Program",
         summary:
-          "Comprehensive curriculum plus implementation checkpoints for steady progress.",
+          "Comprehensive curriculum plus implementation checkpoints for steady, practical progress.",
         basePriceKes: 75000,
         ctaLabel: "Join Standard",
         ctaHref: "/contact?intent=standard-program",
@@ -164,14 +164,14 @@ export const PRICING_CATEGORIES: PricingCategory[] = [
         id: "premium-program",
         name: "Premium Program",
         summary:
-          "Advanced coaching experience with direct support and accelerated execution.",
+          "Advanced coaching experience with direct support for deeper clarity, execution, and visibility.",
         basePriceKes: 120000,
         ctaLabel: "Join Premium",
         ctaHref: "/contact?intent=premium-program",
         features: [
           "Everything in Standard",
           "Private strategy intensives",
-          "Direct placement-positioning coaching",
+          "Direct positioning and visibility coaching",
           "Extended accountability support",
         ],
       },

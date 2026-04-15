@@ -1,10 +1,21 @@
-export const GULF_COUNTRIES = [
+export const CAREER_DESTINATIONS = [
+  "United States",
+  "United Kingdom",
+  "Canada",
+  "Australia",
   "Qatar",
   "United Arab Emirates",
   "Saudi Arabia",
   "Kuwait",
   "Bahrain",
   "Oman",
+  "Germany",
+  "Ireland",
+  "Middle East (General)",
+  "Europe (General)",
+  "Remote / Digital Health",
+  "Career Pivot Beyond Bedside",
+  "Not Sure Yet",
 ] as const
 
 export const NURSE_SOURCE_COUNTRIES = [
@@ -16,5 +27,10 @@ export const NURSE_SOURCE_COUNTRIES = [
   "Ghana",
   "India",
   "Philippines",
+  "South Africa",
+  "United Kingdom",
+  "United States",
+  "Canada",
+  "Australia",
   "Other",
 ] as const

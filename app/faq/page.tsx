@@ -2,18 +2,21 @@ import type { Metadata } from "next"
 
 import { JsonLd } from "@/components/shared/json-ld"
 import { FAQ_ITEMS } from "@/data/faqs"
-import { createPageMetadata } from "@/lib/seo/metadata"
+import { createManagedPageMetadata } from "@/lib/seo/metadata"
 import { createFaqSchema } from "@/lib/seo/structured-data"
 
 const categories = ["Program", "Pricing", "Relocation", "Coaching"] as const
 
-export const metadata: Metadata = createPageMetadata({
-  title: "FAQ",
-  description:
-    "Find answers to common Nurse Prism questions about pricing, coaching, relocation strategy, and the 5P program journey.",
-  path: "/faq",
-  keywords: ["nurse prism faq", "nursing coaching questions", "relocation faq"],
-})
+export async function generateMetadata(): Promise<Metadata> {
+  return createManagedPageMetadata({
+    pageKey: "faq",
+    title: "FAQ",
+    description:
+      "Find answers to common Nurse Prism questions about pricing, coaching, relocation strategy, and the 5P program journey.",
+    path: "/faq",
+    keywords: ["nurse prism faq", "nursing coaching questions", "relocation faq"],
+  })
+}
 
 export default function FaqPage() {
   return (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { getPublicSiteSettings, resolvePublicSetting } from "@/lib/cms/public-content"
 import { SITE_CONFIG } from "@/lib/constants"
 
 const FALLBACK_SITE_URL = "http://localhost:3000"
@@ -43,6 +44,10 @@ type PageMetadataOptions = {
   keywords?: string[]
 }
 
+type ManagedPageMetadataOptions = PageMetadataOptions & {
+  pageKey: string
+}
+
 export function createPageMetadata({
   title,
   description,
@@ -81,6 +86,46 @@ export function createPageMetadata({
       images: [image],
     },
   }
+}
+
+function parseKeywords(value: string, fallback?: string[]) {
+  const parsed = value
+    .split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean)
+
+  return parsed.length > 0 ? parsed : fallback
+}
+
+export async function createManagedPageMetadata({
+  pageKey,
+  title,
+  description,
+  path,
+  image = DEFAULT_OG_IMAGE,
+  keywords,
+}: ManagedPageMetadataOptions): Promise<Metadata> {
+  const settings = await getPublicSiteSettings()
+  const resolvedKeywords = parseKeywords(
+    resolvePublicSetting(
+      settings,
+      `seo.${pageKey}.keywords`,
+      keywords?.join(", ") ?? ""
+    ),
+    keywords
+  )
+
+  return createPageMetadata({
+    title: resolvePublicSetting(settings, `seo.${pageKey}.title`, title),
+    description: resolvePublicSetting(
+      settings,
+      `seo.${pageKey}.description`,
+      description
+    ),
+    path,
+    image: resolvePublicSetting(settings, `seo.${pageKey}.image`, image),
+    keywords: resolvedKeywords,
+  })
 }
 
 type ArticleMetadataOptions = {

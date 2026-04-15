@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import type { Metadata } from "next"
 
 import { SiteLayoutGate } from "@/components/layout/site-layout-gate"
@@ -18,9 +19,10 @@ const rootMetadata = createPageMetadata({
   path: "/",
   keywords: [
     "Nurse Prism",
-    "gulf nursing jobs",
+    "nurse career pivot",
+    "remote nursing careers",
     "international nurse coaching",
-    "nurse relocation support",
+    "digital health transition",
     "healthcare career coaching",
   ],
 })
@@ -52,6 +54,7 @@ export default function RootLayout({
         </a>
         <JsonLd data={createOrganizationSchema()} />
         <JsonLd data={createWebsiteSchema()} />
+        <GoogleAnalytics />
         <SiteLayoutGate>{children}</SiteLayoutGate>
       </body>
     </html>

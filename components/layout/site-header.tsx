@@ -1,9 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 import { MainNav } from "@/components/navigation/main-nav"
 import { MobileNav } from "@/components/navigation/mobile-nav"
-import { Button } from "@/components/ui/button"
 import { CONSULTATION_CTA } from "@/data/navigation"
 import { SITE_CONFIG } from "@/lib/constants"
 
@@ -31,9 +31,14 @@ export function SiteHeader() {
 
         <MainNav className="ml-auto hidden lg:flex" />
 
-        <Button asChild className="ml-auto hidden lg:inline-flex">
-          <Link href={CONSULTATION_CTA.href}>{CONSULTATION_CTA.label}</Link>
-        </Button>
+        <TrackedButtonLink
+          href={CONSULTATION_CTA.href}
+          eventName="cta_click"
+          eventParams={{ placement: "header", cta: "start_nurse_pivot" }}
+          className="ml-auto hidden lg:inline-flex"
+        >
+          {CONSULTATION_CTA.label}
+        </TrackedButtonLink>
 
         <MobileNav className="ml-auto lg:hidden" />
       </div>

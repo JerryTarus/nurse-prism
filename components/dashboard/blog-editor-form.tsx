@@ -19,6 +19,7 @@ type BlogEditorFormProps = {
 
 type SubmitState = "idle" | "saving" | "success" | "error"
 type UploadState = "idle" | "uploading" | "success" | "error"
+type DeleteState = "idle" | "deleting" | "error"
 
 function parsePublishedDate(value: string | null | undefined) {
   if (!value) {
@@ -131,6 +132,7 @@ export function BlogEditorForm({ mode, postId, initialPost }: BlogEditorFormProp
   )
   const [submitState, setSubmitState] = useState<SubmitState>("idle")
   const [uploadState, setUploadState] = useState<UploadState>("idle")
+  const [deleteState, setDeleteState] = useState<DeleteState>("idle")
   const [error, setError] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [datePickerOpen, setDatePickerOpen] = useState(false)
@@ -229,6 +231,43 @@ export function BlogEditorForm({ mode, postId, initialPost }: BlogEditorFormProp
       window.location.assign(responsePayload.redirectTo)
     } catch {
       setSubmitState("error")
+      setError("Network error. Please try again.")
+    }
+  }
+
+  async function handleDelete() {
+    if (mode !== "edit" || !postId) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      "Delete this blog post? This action cannot be undone."
+    )
+    if (!confirmed) {
+      return
+    }
+
+    setDeleteState("deleting")
+    setError(null)
+
+    try {
+      const response = await fetch(`/api/admin/blog/${postId}`, {
+        method: "DELETE",
+      })
+
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string; redirectTo?: string }
+        | undefined
+
+      if (!response.ok || !payload?.redirectTo) {
+        setDeleteState("error")
+        setError(payload?.error ?? "Unable to delete post right now.")
+        return
+      }
+
+      window.location.assign(payload.redirectTo)
+    } catch {
+      setDeleteState("error")
       setError("Network error. Please try again.")
     }
   }
@@ -437,6 +476,17 @@ export function BlogEditorForm({ mode, postId, initialPost }: BlogEditorFormProp
               ? "Create Post"
               : "Save Changes"}
         </Button>
+        {mode === "edit" ? (
+          <Button
+            type="button"
+            variant="outline"
+            className="h-10"
+            onClick={() => void handleDelete()}
+            disabled={deleteState === "deleting"}
+          >
+            {deleteState === "deleting" ? "Deleting..." : "Delete Post"}
+          </Button>
+        ) : null}
         <p className="text-xs text-muted-foreground">
           {submitState === "success"
             ? "Saved successfully. Redirecting..."
