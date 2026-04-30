@@ -16,6 +16,15 @@ import {
 import { SITE_CONFIG } from "@/lib/constants"
 import { createManagedPageMetadata } from "@/lib/seo/metadata"
 
+const HOME_HERO_HEADLINE =
+  "Find clarity. Move beyond the bedside. Build a career that fits your life."
+const HOME_HERO_SUBHEADLINE =
+  "Nurse Prism helps nurses transition into remote roles, digital health, LinkedIn visibility, and international opportunities with a practical plan that feels aligned, not overwhelming."
+const HOME_HERO_TRUST_LINE =
+  "Because nursing is not one path \u2014 it\u2019s a prism."
+const HOME_CTA_HEADING = "Get practical career insights for modern nurses"
+const HOME_CTA_SUBTEXT = "Actionable guidance. No noise."
+
 export async function generateMetadata(): Promise<Metadata> {
   return createManagedPageMetadata({
     pageKey: "home",
@@ -41,12 +50,6 @@ export default async function HomePage() {
     getPublicSiteSettings(),
   ])
 
-  const hero = resolvePublicSection(sections, "hero", {
-    title:
-      "Find Clarity, Transition Beyond the Bedside, and Build Aligned Roles in Remote, Tech, and International Spaces",
-    content:
-      "Through coaching, digital health insights, LinkedIn strategy, and international career guidance, Nurse Prism helps nurses move from feeling stuck to building flexible, purpose-driven careers with confidence.",
-  })
   const services = resolvePublicSection(sections, "services", {
     title: "Career support designed for clarity, visibility, and aligned transition",
     content:
@@ -62,33 +65,21 @@ export default async function HomePage() {
     content:
       "Transparent USD pricing with clear outcomes. The Professional Pivot is our most selected option for balanced depth, visibility, and momentum.",
   })
-  const cta = resolvePublicSection(sections, "cta", {
-    title: "Ready to build a nursing career that fits who you are now?",
-    content:
-      "Book a consultation and get a practical roadmap tailored to your target path, timeline, and professional goals across remote, digital, international, and evolving healthcare roles.",
-  })
 
   return (
     <>
       <HeroSection
-        badge={resolvePublicSetting(
-          settings,
-          "hero.badge",
-          "Transforming Nursing Careers"
-        )}
-        title={hero.title}
-        body={hero.content}
+        badge="Transforming Nursing Careers"
+        title={HOME_HERO_HEADLINE}
+        body={HOME_HERO_SUBHEADLINE}
+        trustLine={HOME_HERO_TRUST_LINE}
         imageSrc={resolvePublicSetting(
           settings,
           "appearance.hero",
           "/images/hero/nurse-prism-hero.webp"
         )}
         primaryCta={{
-          label: resolvePublicSetting(
-            settings,
-            "hero.primary_cta_label",
-            "Start Your Nurse Pivot"
-          ),
+          label: "Start Your Nurse Pivot",
           href: resolvePublicSetting(
             settings,
             "hero.primary_cta_href",
@@ -96,11 +87,7 @@ export default async function HomePage() {
           ),
         }}
         secondaryCta={{
-          label: resolvePublicSetting(
-            settings,
-            "hero.secondary_cta_label",
-            "Book a Career Consultation"
-          ),
+          label: "Book a Career Consultation \u2192",
           href: resolvePublicSetting(
             settings,
             "hero.secondary_cta_href",
@@ -124,8 +111,9 @@ export default async function HomePage() {
       />
       <TestimonialsSection />
       <CtaSection
-        title={cta.title}
-        content={cta.content}
+        variant="homepage"
+        title={HOME_CTA_HEADING}
+        content={HOME_CTA_SUBTEXT}
         primaryCta={{
           label: resolvePublicSetting(
             settings,

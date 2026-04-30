@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 
 import { AdminReturnPill } from "@/components/navigation/admin-return-pill"
 import { FloatingCta } from "@/components/navigation/floating-cta"
+import { ScrollToTopButton } from "@/components/navigation/scroll-to-top-button"
 
 import { SiteFooter } from "./site-footer"
 import { SiteHeader } from "./site-header"
@@ -19,6 +20,7 @@ export function PageShell({ children }: PageShellProps) {
       </main>
       <SiteFooter />
       <AdminReturnPill />
+      <ScrollToTopButton />
       <FloatingCta />
     </div>
   )
