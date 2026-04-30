@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 
 import { resolveAuthAccess } from "@/lib/auth/access"
+import { getPostAuthRedirect } from "@/lib/auth/admin-flow"
 import { sanitizeRedirectPath } from "@/lib/auth/redirect"
+import { syncAllowlistedUserIfNeeded } from "@/lib/auth/profile-sync"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 export async function GET(request: Request) {
@@ -33,18 +35,15 @@ export async function GET(request: Request) {
     },
   ] = await Promise.all([supabase.auth.getUser(), supabase.auth.getSession()])
 
+  const role = user ? await syncAllowlistedUserIfNeeded(user) : null
   const access = resolveAuthAccess(user, session)
 
-  if (!access.isAuthenticated || !access.isAdmin) {
+  if (!access.isAuthenticated || !access.isAdmin || !role) {
     await supabase.auth.signOut()
     return NextResponse.redirect(new URL("/auth/login?error=forbidden", request.url))
   }
 
-  if (access.mfa.required && !access.mfa.verified) {
-    const mfaUrl = new URL("/auth/mfa", request.url)
-    mfaUrl.searchParams.set("next", fallbackNext)
-    return NextResponse.redirect(mfaUrl)
-  }
-
-  return NextResponse.redirect(new URL(fallbackNext, request.url))
+  return NextResponse.redirect(
+    new URL(getPostAuthRedirect(access, fallbackNext), request.url)
+  )
 }

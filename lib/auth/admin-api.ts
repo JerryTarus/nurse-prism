@@ -5,6 +5,7 @@ import { NextResponse } from "next/server"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 import { resolveAuthAccess } from "./access"
+import { syncAllowlistedUserIfNeeded } from "./profile-sync"
 
 type RequireAdminApiSessionOptions = {
   requireSuperAdmin?: boolean
@@ -22,6 +23,10 @@ export async function requireAdminApiSession(
       data: { session },
     },
   ] = await Promise.all([supabase.auth.getUser(), supabase.auth.getSession()])
+
+  if (user) {
+    await syncAllowlistedUserIfNeeded(user)
+  }
 
   const access = resolveAuthAccess(user, session)
 

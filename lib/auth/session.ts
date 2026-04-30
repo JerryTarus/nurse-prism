@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 import { resolveAuthAccess } from "./access"
+import { syncAllowlistedUserIfNeeded } from "./profile-sync"
 import { sanitizeRedirectPath } from "./redirect"
 
 export const getServerSessionContext = cache(async () => {
@@ -18,6 +19,10 @@ export const getServerSessionContext = cache(async () => {
       data: { session },
     },
   ] = await Promise.all([supabase.auth.getUser(), supabase.auth.getSession()])
+
+  if (user) {
+    await syncAllowlistedUserIfNeeded(user)
+  }
 
   const access = resolveAuthAccess(user, session)
 
@@ -37,8 +42,12 @@ export async function requireAdminSession(options?: RequireAdminSessionOptions) 
 
   const context = await getServerSessionContext()
 
-  if (!context.user || !context.access.isAdmin) {
+  if (!context.user) {
     redirect(`/auth/login?next=${encodeURIComponent(nextPath)}`)
+  }
+
+  if (!context.access.isAdmin) {
+    redirect(`/auth/login?next=${encodeURIComponent(nextPath)}&error=forbidden`)
   }
 
   if (
