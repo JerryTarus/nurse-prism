@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 
 const spec = JSON.parse(fs.readFileSync('openapi.json', 'utf8'));
