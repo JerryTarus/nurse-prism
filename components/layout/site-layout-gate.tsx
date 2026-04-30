@@ -16,15 +16,10 @@ export function SiteLayoutGate({ children }: SiteLayoutGateProps) {
   const isShellExcluded = APP_SHELL_EXCLUDED_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
   )
-  const showSocialProofToast = pathname !== "/"
 
   if (isShellExcluded) {
     return <>{children}</>
   }
 
-  return (
-    <PageShell showSocialProofToast={showSocialProofToast}>
-      {children}
-    </PageShell>
-  )
+  return <PageShell>{children}</PageShell>
 }

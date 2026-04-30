@@ -2,20 +2,15 @@ import type { ReactNode } from "react"
 
 import { AdminReturnPill } from "@/components/navigation/admin-return-pill"
 import { FloatingCta } from "@/components/navigation/floating-cta"
-import { SocialProofToast } from "@/components/sections/social-proof-toast"
 
 import { SiteFooter } from "./site-footer"
 import { SiteHeader } from "./site-header"
 
 type PageShellProps = {
   children: ReactNode
-  showSocialProofToast?: boolean
 }
 
-export function PageShell({
-  children,
-  showSocialProofToast = true,
-}: PageShellProps) {
+export function PageShell({ children }: PageShellProps) {
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip">
       <SiteHeader />
@@ -25,7 +20,6 @@ export function PageShell({
       <SiteFooter />
       <AdminReturnPill />
       <FloatingCta />
-      {showSocialProofToast ? <SocialProofToast /> : null}
     </div>
   )
 }
