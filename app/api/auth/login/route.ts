@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 
+import { getPostAuthRedirect } from "@/lib/auth/admin-flow"
 import { resolveAuthAccess } from "@/lib/auth/access"
 import { sanitizeRedirectPath } from "@/lib/auth/redirect"
+import { syncAllowlistedUserIfNeeded } from "@/lib/auth/profile-sync"
 import { enforceRateLimit, getRequestIp } from "@/lib/security/rate-limit"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { emailLoginSchema } from "@/lib/validations/auth"
@@ -15,6 +17,7 @@ export async function POST(request: Request) {
   const clientIp = getRequestIp(request.headers)
 
   let payload: unknown
+
   try {
     payload = await request.json()
   } catch {
@@ -24,13 +27,12 @@ export async function POST(request: Request) {
   const parsed = emailLoginSchema.safeParse(payload)
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Please provide a valid email and password." },
+      { error: "Please enter a valid email and password." },
       { status: 400 }
     )
   }
 
-  const { email, password, next } = parsed.data
-  const rateLimitKey = `auth:password:${clientIp}:${email}`
+  const rateLimitKey = `auth:password:${clientIp}:${parsed.data.email}`
   const rate = enforceRateLimit(rateLimitKey, LOGIN_RATE_LIMIT)
 
   if (!rate.ok) {
@@ -43,15 +45,16 @@ export async function POST(request: Request) {
     )
   }
 
+  const nextPath = sanitizeRedirectPath(parsed.data.next, "/admin")
   const supabase = await createSupabaseServerClient()
   const { error: signInError } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+    email: parsed.data.email,
+    password: parsed.data.password,
   })
 
   if (signInError) {
     return NextResponse.json(
-      { error: "Invalid credentials or account not available." },
+      { error: "We couldn't sign you in with those details." },
       { status: 401 }
     )
   }
@@ -65,23 +68,32 @@ export async function POST(request: Request) {
     },
   ] = await Promise.all([supabase.auth.getUser(), supabase.auth.getSession()])
 
-  const access = resolveAuthAccess(user, session)
+  const role = user ? await syncAllowlistedUserIfNeeded(user) : null
 
-  if (!access.isAdmin) {
+  if (!user || !role) {
     await supabase.auth.signOut()
     return NextResponse.json(
-      { error: "This account is not permitted to access the admin dashboard." },
+      {
+        error: "This account is not authorized for the Nurse Prism dashboard.",
+      },
       { status: 403 }
     )
   }
 
-  const nextPath = sanitizeRedirectPath(next, "/admin")
-  if (access.mfa.required && !access.mfa.verified) {
+  const access = resolveAuthAccess(user, session)
+
+  if (!access.isAuthenticated || !access.isAdmin) {
+    await supabase.auth.signOut()
     return NextResponse.json(
-      { redirectTo: `/auth/mfa?next=${encodeURIComponent(nextPath)}` },
-      { status: 200 }
+      {
+        error: "This account is not authorized for the Nurse Prism dashboard.",
+      },
+      { status: 403 }
     )
   }
 
-  return NextResponse.json({ redirectTo: nextPath }, { status: 200 })
+  return NextResponse.json(
+    { redirectTo: getPostAuthRedirect(access, nextPath) },
+    { status: 200 }
+  )
 }

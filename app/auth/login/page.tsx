@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   ...createPageMetadata({
     title: "Admin Login",
     description:
-      "Secure admin authentication for Nurse Prism operations with Google OAuth and enterprise email/password login.",
+      "Secure Google and email sign-in for authorized Nurse Prism dashboard administrators.",
     path: "/auth/login",
   }),
   robots: {
