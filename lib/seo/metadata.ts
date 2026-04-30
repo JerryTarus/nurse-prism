@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import { getPublicSiteSettings, resolvePublicSetting } from "@/lib/cms/public-content"
 import { SITE_CONFIG } from "@/lib/constants"
+import { getSupabaseServerEnv } from "@/lib/supabase/env.server"
 
 const FALLBACK_SITE_URL = "http://localhost:3000"
 const DEFAULT_OG_IMAGE = "/images/hero/nurse-prism-hero.webp"
@@ -15,9 +16,8 @@ function normalizePath(path: string) {
 }
 
 export function getSiteUrl() {
-  const value = process.env.NEXT_PUBLIC_SITE_URL ?? FALLBACK_SITE_URL
-
   try {
+    const value = getSupabaseServerEnv().NEXT_PUBLIC_SITE_URL
     const normalized = new URL(value).toString().replace(/\/$/, "")
 
     return normalized
