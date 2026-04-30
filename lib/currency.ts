@@ -1,6 +1,9 @@
 import { CURRENCY_CONFIG } from "@/data/pricing"
 import type { SupportedCurrency } from "@/types/pricing"
 
+export const PUBLIC_USD_PRICING_DISCLAIMER =
+  "All prices are shown in USD. Your payment provider may convert the amount based on your local currency and exchange rate at checkout."
+
 const localeCurrencyMap: Record<string, SupportedCurrency> = {
   QA: "QAR",
   AE: "AED",

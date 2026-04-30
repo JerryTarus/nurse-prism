@@ -22,14 +22,14 @@ export const ACTIVITY_FEED: ActivityItem[] = [
     id: "activity-2",
     nurse: "Brenda",
     country: "UAE",
-    action: "started the Professional Plan",
+    action: "started the Professional Pivot",
     timeframe: "4 minutes ago",
   },
   {
     id: "activity-3",
     nurse: "Janet",
     country: "Saudi Arabia",
-    action: "scheduled a Strategy Session",
+    action: "scheduled a Career Clarity Session",
     timeframe: "12 minutes ago",
   },
   {

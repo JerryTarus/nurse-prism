@@ -43,28 +43,24 @@ export default async function HomePage() {
 
   const hero = resolvePublicSection(sections, "hero", {
     title:
-      "Transforming Nursing Careers: Find Clarity, Transition Beyond the Bedside, and Build Aligned Roles in Remote, Tech, and International Spaces",
+      "Find Clarity, Transition Beyond the Bedside, and Build Aligned Roles in Remote, Tech, and International Spaces",
     content:
-      "Through coaching, digital health insights, and LinkedIn strategy, I help nurses move from feeling stuck to building flexible, purpose-driven careers beyond traditional roles - whether in remote work, healthcare technology, or global opportunities.",
-  })
-  const heroNote = resolvePublicSection(sections, "hero-note", {
-    title: "",
-    content: "Because nursing is not one path - it's a prism.",
+      "Through coaching, digital health insights, LinkedIn strategy, and international career guidance, Nurse Prism helps nurses move from feeling stuck to building flexible, purpose-driven careers with confidence.",
   })
   const services = resolvePublicSection(sections, "services", {
-    title: "Practical support for every stage of your nurse pivot",
+    title: "Career support designed for clarity, visibility, and aligned transition",
     content:
-      "Choose focused coaching for clarity, LinkedIn strategy, remote roles, global opportunities, and confident career decisions.",
+      "Choose focused support for career clarity, LinkedIn positioning, remote work transitions, digital health exploration, international pathways, and the Nurse Prism Career Program.",
   })
   const aboutPreview = resolvePublicSection(sections, "about-preview", {
-    title: "Built from a real nursing journey across Kenya, Qatar, and beyond",
+    title: "Built from real nursing experience and a broader vision for what comes next",
     content:
-      "Nurse Prism was shaped by lived nursing experience, international practice, reflection, and the realization that many talented nurses need more than relocation advice - they need help reimagining what their careers can become.\n\nThat is why the platform now supports nurses exploring global mobility, digital health, remote work, LinkedIn visibility, and aligned growth beyond one narrow path.",
+      "Nurse Prism was shaped by lived nursing experience, international practice, reflection, and the realization that many talented nurses need more than relocation advice. They need support reimagining what their careers can become.\n\nThat is why the platform now helps nurses pursue remote roles, digital health opportunities, stronger LinkedIn visibility, global mobility, and aligned growth beyond one narrow path.",
   })
   const pricingPreview = resolvePublicSection(sections, "pricing-preview", {
     title: "Choose the support level that matches your transition pace",
     content:
-      "Transparent pricing with clear outcomes. The Professional Plan is our most selected option for balanced depth, visibility, and momentum.",
+      "Transparent USD pricing with clear outcomes. The Professional Pivot is our most selected option for balanced depth, visibility, and momentum.",
   })
   const cta = resolvePublicSection(sections, "cta", {
     title: "Ready to build a nursing career that fits who you are now?",
@@ -78,11 +74,10 @@ export default async function HomePage() {
         badge={resolvePublicSetting(
           settings,
           "hero.badge",
-          "Career Coaching for Nurses"
+          "Transforming Nursing Careers"
         )}
         title={hero.title}
         body={hero.content}
-        note={heroNote.content}
         imageSrc={resolvePublicSetting(
           settings,
           "appearance.hero",
@@ -97,19 +92,19 @@ export default async function HomePage() {
           href: resolvePublicSetting(
             settings,
             "hero.primary_cta_href",
-            SITE_CONFIG.consultationHref
+            SITE_CONFIG.freeCallHref
           ),
         }}
         secondaryCta={{
           label: resolvePublicSetting(
             settings,
             "hero.secondary_cta_label",
-            "Explore Program"
+            "Book a Career Consultation"
           ),
           href: resolvePublicSetting(
             settings,
             "hero.secondary_cta_href",
-            "/program"
+            SITE_CONFIG.consultationHref
           ),
         }}
       />

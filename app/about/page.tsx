@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     pageKey: "about",
     title: "About Nurse Prism",
     description:
-      "Meet the founder of Nurse Prism and explore the 5P framework guiding nurses toward clearer, more flexible careers beyond one narrow path.",
+      "Meet the founder of Nurse Prism and explore the story, digital health perspective, and coaching philosophy helping nurses grow beyond one narrow career path.",
     path: "/about",
     keywords: [
       "about Nurse Prism",
@@ -42,22 +42,27 @@ export default async function AboutPage() {
   const intro = resolvePublicSection(sections, "intro", {
     title: "The story behind Nurse Prism",
     content:
-      "Nurse Prism grew from a real nursing journey that began in Kenya, expanded through clinical work in Qatar, and opened a wider reflection on what nursing careers can become when they are no longer limited to one definition of success.\n\nThat journey built clinical credibility, cultural awareness, and a deep understanding of what nurses need when they are trying to make brave career decisions in unfamiliar territory.\n\nNurse Prism exists to help nurses move with more clarity into global pathways, digital health, remote work, stronger visibility, and aligned career growth beyond the bedside.",
+      "Nurse Prism grew from a real nursing journey that began in Kenya, expanded through international clinical practice, and gradually opened into a bigger question: what happens when a nurse outgrows the narrow version of success the profession often expects?\n\nNursing is deeply human work. It is emotional, complex, meaningful, and demanding. It asks a lot of the people who carry it. Over time, that reality created space for reflection, curiosity, and a wider vision for what a nursing career can become.\n\nNurse Prism was created as a place where nurses can pause, think clearly, and explore career possibilities with honesty, structure, and confidence.",
   })
-  const mission = resolvePublicSection(sections, "mission", {
-    title: "Our Mission",
+  const whyCreated = resolvePublicSection(sections, "why-created", {
+    title: "Why I Created Nurse Prism",
     content:
-      "To equip nurses with strategic clarity, practical positioning, and confidence as they grow into remote, digital, international, and purpose-aligned roles.",
+      "I created Nurse Prism because too many nurses feel boxed into one story about what comes next. Some want a safer international move. Some want flexibility. Some are drawn to remote work, personal branding, innovation, or a role beyond the bedside, but do not know how to translate their experience into that future.\n\nThis platform exists to make that transition feel less lonely and more practical. It is a space for reflection, strategic coaching, and wider career possibility.",
   })
-  const promise = resolvePublicSection(sections, "promise", {
-    title: "Our Promise",
+  const digitalHealth = resolvePublicSection(sections, "digital-health", {
+    title: "Bringing Digital Health into the Picture",
     content:
-      "Every nurse receives thoughtful, ethical guidance designed to protect their time, money, confidence, and long-term career direction.",
+      "Alongside clinical work, my interest kept growing toward digital health, healthcare data analytics, systems thinking, and innovation. I became increasingly interested in how care delivery changes when technology, coordination, insight, and human-centered design work well together.\n\nThat perspective now shapes Nurse Prism. Nurses deserve support that helps them see how bedside experience can connect to telehealth, care operations, healthcare technology, data-informed roles, and future-focused work that still honors the heart of nursing.",
+  })
+  const careerPossibility = resolvePublicSection(sections, "career-possibility", {
+    title: "From Clinical Practice to Career Possibility",
+    content:
+      "The cross-border nursing journey remains part of Nurse Prism's credibility because it was built through real patient care, adaptation, and cross-cultural practice. But the mission is broader now.\n\nNurse Prism supports nurses who want to grow beyond one narrow path and build aligned careers across international opportunities, remote work, digital health, LinkedIn visibility, and purposeful professional reinvention.",
   })
   const framework = resolvePublicSection(sections, "framework", {
     title: "The Nurse Prism 5P Framework",
     content:
-      "Our coaching methodology follows five stages that turn uncertainty into clearer, more intentional progress.",
+      "The framework below turns reflection into practical momentum so each career move feels clearer, more intentional, and more sustainable.",
   })
   const introParagraphs = splitSectionParagraphs(intro.content)
   const founderImageSrc = resolvePublicSetting(
@@ -76,14 +81,14 @@ export default async function AboutPage() {
               alt="Nurse Prism founder portrait"
               width={900}
               height={1100}
-              className="h-full min-h-80 w-full rounded-3xl object-cover"
+              className="aspect-[4/5] h-full min-h-80 w-full rounded-3xl object-cover object-top"
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={founderImageSrc}
               alt="Nurse Prism founder portrait"
-              className="h-full min-h-80 w-full rounded-3xl object-cover"
+              className="aspect-[4/5] h-full min-h-80 w-full rounded-3xl object-cover object-top"
             />
           )}
 
@@ -110,24 +115,48 @@ export default async function AboutPage() {
       </section>
 
       <section className="np-container py-8 sm:py-10">
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-3">
           <article className="rounded-2xl border border-border/80 bg-card/95 p-5">
             <Compass className="size-5 text-primary" />
             <h2 className="font-heading mt-3 text-xl font-semibold text-foreground">
-              {mission.title}
+              {whyCreated.title}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {mission.content}
-            </p>
+            {splitSectionParagraphs(whyCreated.content).map((paragraph, index) => (
+              <p
+                key={`${whyCreated.title}-${index}`}
+                className={index === 0 ? "mt-2 text-sm leading-6 text-muted-foreground" : "mt-3 text-sm leading-6 text-muted-foreground"}
+              >
+                {paragraph}
+              </p>
+            ))}
           </article>
           <article className="rounded-2xl border border-border/80 bg-card/95 p-5">
             <HeartHandshake className="size-5 text-primary" />
             <h2 className="font-heading mt-3 text-xl font-semibold text-foreground">
-              {promise.title}
+              {digitalHealth.title}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {promise.content}
-            </p>
+            {splitSectionParagraphs(digitalHealth.content).map((paragraph, index) => (
+              <p
+                key={`${digitalHealth.title}-${index}`}
+                className={index === 0 ? "mt-2 text-sm leading-6 text-muted-foreground" : "mt-3 text-sm leading-6 text-muted-foreground"}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </article>
+          <article className="rounded-2xl border border-border/80 bg-card/95 p-5">
+            <Sparkles className="size-5 text-primary" />
+            <h2 className="font-heading mt-3 text-xl font-semibold text-foreground">
+              {careerPossibility.title}
+            </h2>
+            {splitSectionParagraphs(careerPossibility.content).map((paragraph, index) => (
+              <p
+                key={`${careerPossibility.title}-${index}`}
+                className={index === 0 ? "mt-2 text-sm leading-6 text-muted-foreground" : "mt-3 text-sm leading-6 text-muted-foreground"}
+              >
+                {paragraph}
+              </p>
+            ))}
           </article>
         </div>
       </section>

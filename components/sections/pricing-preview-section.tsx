@@ -1,9 +1,6 @@
-"use client"
-
 import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
-import { CurrencySwitcher } from "@/components/pricing/currency-switcher"
 import { PricingCard } from "@/components/pricing/pricing-card"
-import { useCurrency } from "@/hooks/use-currency"
+import { PUBLIC_USD_PRICING_DISCLAIMER } from "@/lib/currency"
 import type { PricingCategory } from "@/types/pricing"
 
 type PricingPreviewSectionProps = {
@@ -18,7 +15,6 @@ export function PricingPreviewSection({
   pricingCategories,
   heading,
 }: PricingPreviewSectionProps) {
-  const { currency, setCurrency } = useCurrency("KES")
   const relocationPlans =
     pricingCategories.find((category) => category.id === "relocation")?.plans ?? []
 
@@ -35,21 +31,20 @@ export function PricingPreviewSection({
           </h2>
           <p className="mt-2 max-w-3xl text-muted-foreground">
             {heading?.content ??
-              "Transparent pricing with clear outcomes. The Professional Plan is our most selected option for balanced depth, visibility, and momentum."}
+              "Transparent USD pricing with clear outcomes. The Professional Pivot is our most selected option for balanced depth, visibility, and momentum."}
           </p>
         </div>
-        <CurrencySwitcher value={currency} onChange={setCurrency} />
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-3">
         {relocationPlans.map((plan) => (
-          <PricingCard key={plan.id} plan={plan} currency={currency} />
+          <PricingCard key={plan.id} plan={plan} />
         ))}
       </div>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-muted-foreground">
-          Non-KES values are estimates based on controlled internal planning rates.
+          {PUBLIC_USD_PRICING_DISCLAIMER}
         </p>
         <TrackedButtonLink
           href="/pricing"

@@ -61,12 +61,12 @@ export default async function ServicesPage() {
   const intro = resolvePublicSection(sections, "intro", {
     title: "Coaching built for nurses navigating real career change",
     content:
-      "Whether you need quick clarity, stronger positioning, or a high-support transition strategy, Nurse Prism services are designed to reduce confusion and accelerate aligned action.",
+      "Whether you need quick clarity, stronger positioning, a remote-work pivot, international planning, or deeper guided support, Nurse Prism services are designed to reduce confusion and accelerate aligned action.",
   })
   const servicesHeading = resolvePublicSection(sections, "services-grid", {
-    title: "Practical support for every stage of your nurse pivot",
+    title: "Five focused support paths for the next version of your nursing career",
     content:
-      "Choose focused coaching for clarity, LinkedIn strategy, remote roles, global opportunities, and confident career decisions.",
+      "Choose focused coaching for clarity, LinkedIn strategy, remote and digital health transitions, international pathways, and the Nurse Prism Career Program.",
   })
   const process = resolvePublicSection(sections, "process", {
     title: "How our coaching process works",

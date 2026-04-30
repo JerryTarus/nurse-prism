@@ -49,10 +49,13 @@ export async function POST(request: Request) {
   }
 
   if (!getCalendlyUrlForIntent(parsed.data.intent)) {
+    console.error("Calendly URL missing for consultation intent", {
+      intent: parsed.data.intent,
+    })
     return NextResponse.json(
       {
         error:
-          "Scheduling is not configured yet. Please add the Calendly launch URLs before accepting bookings.",
+          "Scheduling is not available right now. Please try again later or contact Nurse Prism.",
       },
       { status: 500 }
     )
@@ -71,7 +74,6 @@ export async function POST(request: Request) {
           ? {
               id: result.plan.id,
               name: result.plan.name,
-              amountKes: result.plan.basePriceKes,
               amountUsd:
                 result.plan.basePriceKes > 0
                   ? convertKesToCurrency(result.plan.basePriceKes, "USD").toFixed(2)
@@ -79,18 +81,17 @@ export async function POST(request: Request) {
             }
           : null,
         message: result.paymentRequired
-          ? "Consultation saved. Continue to PayPal to unlock your paid booking link."
+          ? "Consultation saved. Proceed to secure checkout to unlock your paid booking link."
           : "Consultation saved. Continue to Calendly to choose your free session time.",
       },
       { status: 201 }
     )
   } catch (error) {
+    console.error("Failed to create consultation lead", error)
     return NextResponse.json(
       {
         error:
-          error instanceof Error
-            ? error.message
-            : "Unable to submit your consultation right now.",
+          "Something went wrong while preparing your booking. Please try again or contact support.",
       },
       { status: 500 }
     )

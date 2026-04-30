@@ -37,7 +37,7 @@ export function CalendlyContinueButton({
       const redirectUrl = payload?.redirectUrl ?? fallbackUrl
 
       if (!response.ok || !redirectUrl) {
-        throw new Error(payload?.error ?? "Unable to continue to Calendly.")
+        throw new Error("calendly_redirect_failed")
       }
 
       trackEvent("calendly_click", {
@@ -55,9 +55,10 @@ export function CalendlyContinueButton({
         return
       }
 
+      console.error("Calendly continuation failed", error)
       setStatus("error")
       setErrorMessage(
-        error instanceof Error ? error.message : "Unable to continue right now."
+        "Something went wrong while preparing your booking. Please try again or contact support."
       )
       return
     }

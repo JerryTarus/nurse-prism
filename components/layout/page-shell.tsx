@@ -9,9 +9,13 @@ import { SiteHeader } from "./site-header"
 
 type PageShellProps = {
   children: ReactNode
+  showSocialProofToast?: boolean
 }
 
-export function PageShell({ children }: PageShellProps) {
+export function PageShell({
+  children,
+  showSocialProofToast = true,
+}: PageShellProps) {
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip">
       <SiteHeader />
@@ -21,7 +25,7 @@ export function PageShell({ children }: PageShellProps) {
       <SiteFooter />
       <AdminReturnPill />
       <FloatingCta />
-      <SocialProofToast />
+      {showSocialProofToast ? <SocialProofToast /> : null}
     </div>
   )
 }

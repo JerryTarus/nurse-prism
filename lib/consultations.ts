@@ -16,11 +16,11 @@ export type ConsultationIntent = (typeof CONSULTATION_INTENTS)[number]
 
 const INTENT_FALLBACK_LABELS: Record<ConsultationIntent, string> = {
   "free-clarity-call": "Free Clarity Call",
-  "strategy-session": "Paid Strategy Session",
-  "starter-plan": "Starter Plan",
-  "professional-plan": "Professional Plan",
-  "elite-plan": "Elite Plan",
-  "standard-program": "Standard Program",
+  "strategy-session": "Career Clarity Session",
+  "starter-plan": "Starter Pivot",
+  "professional-plan": "Professional Pivot",
+  "elite-plan": "Elite Pivot",
+  "standard-program": "Core Program",
   "premium-program": "Premium Program",
 }
 

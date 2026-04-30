@@ -4,7 +4,7 @@ export async function POST() {
   return NextResponse.json(
     {
       message:
-        "PayPal webhook endpoint is reserved for verified production reconciliation. Checkout create and capture are already active.",
+        "PayPal webhook reconciliation is not active for launch yet. Checkout create and capture remain active.",
     },
     { status: 202 }
   )

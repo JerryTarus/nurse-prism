@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     pageKey: "pricing",
     title: "Pricing",
     description:
-      "Compare Nurse Prism consultation, coaching, and program plans with transparent pricing and estimated local currency views.",
+      "Compare Nurse Prism consultation, coaching, and program plans with transparent USD pricing for nurses exploring clearer, more aligned career moves.",
     path: "/pricing",
     keywords: [
       "nurse coaching pricing",
@@ -32,7 +32,7 @@ export default async function PricingPage() {
   const intro = resolvePublicSection(sections, "intro", {
     title: "Transparent plans for every stage of your career transition",
     content:
-      "Start free, choose strategic consultations, or commit to deeper support. The Professional Plan remains our most selected option for balanced depth and momentum.",
+      "Start free, choose a strategic consultation, or commit to deeper coaching support. All public pricing is shown in USD for a clearer launch-ready checkout experience.",
   })
 
   return (

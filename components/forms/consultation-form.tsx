@@ -38,6 +38,13 @@ const initialState = {
   notes: "",
 }
 
+const BOOKING_PREPARATION_ERROR =
+  "Something went wrong while preparing your booking. Please try again or contact support."
+const CHECKOUT_START_ERROR =
+  "We couldn't start checkout right now. Please try again in a moment."
+const PAYMENT_CAPTURE_ERROR =
+  "We couldn't confirm your payment right now. Please try again in a moment."
+
 type FlowState =
   | {
       stage: "idle" | "loading" | "redirecting" | "capturing" | "cancelled"
@@ -175,9 +182,13 @@ export function ConsultationForm({
           | null
 
         if (!response.ok || !payload?.bookingId) {
-          throw new Error(
-            payload?.error ?? "Unable to confirm the PayPal payment right now."
-          )
+          console.error("PayPal capture response was not usable", {
+            status: response.status,
+            payload,
+            bookingId,
+            orderId,
+          })
+          throw new Error("capture_failed")
         }
 
         setFlow({
@@ -195,13 +206,11 @@ export function ConsultationForm({
           flow: "paid_consultation",
         })
       } catch (error) {
+        console.error("PayPal capture flow failed", error)
         setFlow({
           stage: "idle",
           message: null,
-          error:
-            error instanceof Error
-            ? error.message
-            : "Unable to confirm your payment right now.",
+          error: PAYMENT_CAPTURE_ERROR,
           bookingId: null,
           calendlyUrl: null,
         })
@@ -239,9 +248,11 @@ export function ConsultationForm({
         | null
 
       if (!leadResponse.ok || !leadPayload?.bookingId) {
-        throw new Error(
-          leadPayload?.error ?? "Unable to submit your consultation right now."
-        )
+        console.error("Consultation lead response was not usable", {
+          status: leadResponse.status,
+          payload: leadPayload,
+        })
+        throw new Error("booking_failed")
       }
 
       if (!leadPayload.requiresPayment) {
@@ -287,9 +298,12 @@ export function ConsultationForm({
         | null
 
       if (!orderResponse.ok || !orderPayload?.approvalUrl) {
-        throw new Error(
-          orderPayload?.error ?? "Unable to start the PayPal checkout right now."
-        )
+        console.error("PayPal order response was not usable", {
+          status: orderResponse.status,
+          payload: orderPayload,
+          bookingId: leadPayload.bookingId,
+        })
+        throw new Error("checkout_failed")
       }
 
       trackEvent("paypal_checkout_start", {
@@ -299,13 +313,14 @@ export function ConsultationForm({
       })
       window.location.assign(orderPayload.approvalUrl)
     } catch (error) {
+      console.error("Consultation submission failed", error)
       setFlow({
         stage: "idle",
         message: null,
         error:
-          error instanceof Error
-            ? error.message
-            : "Unable to submit your consultation right now.",
+          error instanceof Error && error.message === "checkout_failed"
+            ? CHECKOUT_START_ERROR
+            : BOOKING_PREPARATION_ERROR,
         bookingId: null,
         calendlyUrl: null,
       })
@@ -318,7 +333,7 @@ export function ConsultationForm({
       : flow.stage === "redirecting"
         ? "Redirecting..."
         : isPaidSelection
-          ? "Continue to PayPal"
+          ? "Proceed to Secure Checkout"
           : "Save and Continue to Calendly"
 
   return (
@@ -354,7 +369,7 @@ export function ConsultationForm({
           <div className="text-left sm:text-right">
             <p className="font-heading text-xl font-semibold text-primary">
               {selectedPlan
-                ? formatCurrencyAmount(selectedPlan.basePriceKes, "KES")
+                ? formatCurrencyAmount(selectedPlan.basePriceKes, "USD")
                 : "Custom"}
             </p>
             <p className="text-xs text-muted-foreground">
@@ -364,6 +379,10 @@ export function ConsultationForm({
             </p>
           </div>
         </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          All prices are shown in USD. Your payment provider may convert the
+          amount based on your local currency and exchange rate at checkout.
+        </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

@@ -2,7 +2,7 @@ export type FaqItem = {
   id: string
   question: string
   answer: string
-  category: "Program" | "Pricing" | "Relocation" | "Coaching"
+  category: "Program" | "Pricing" | "Global Pathways" | "Coaching"
 }
 
 export const FAQ_ITEMS: FaqItem[] = [
@@ -29,7 +29,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "faq-4",
-    category: "Relocation",
+    category: "Global Pathways",
     question: "Do you guarantee placement?",
     answer:
       "No ethical coach can guarantee placement. Nurse Prism provides strategic preparation, profile positioning, and interview support to significantly strengthen your chances.",
@@ -37,9 +37,9 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: "faq-5",
     category: "Pricing",
-    question: "Why are non-KES prices shown as estimates?",
+    question: "Are all public prices shown in USD?",
     answer:
-      "Displayed values in USD, QAR, AED, and SAR are estimate conversions based on controlled internal rates for planning convenience. Final billing remains based on configured checkout currency.",
+      "Yes. Public pricing is shown in USD for clarity. Your payment provider may convert the amount based on your local currency and exchange rate at checkout.",
   },
   {
     id: "faq-6",

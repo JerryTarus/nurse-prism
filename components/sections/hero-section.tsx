@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ArrowRight, CalendarCheck2, Sparkles } from "lucide-react"
+import { ArrowRight, CalendarCheck2 } from "lucide-react"
 
 import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 
@@ -9,7 +9,6 @@ type HeroSectionProps = {
   badge?: string
   title: string
   body: string
-  note: string
   imageSrc: string
   primaryCta: {
     label: string
@@ -26,35 +25,30 @@ function isLocalImageSrc(value: string) {
 }
 
 export function HeroSection({
-  badge = "Career Coaching for Nurses",
+  badge = "Transforming Nursing Careers",
   title,
   body,
-  note,
   imageSrc,
   primaryCta,
   secondaryCta,
 }: HeroSectionProps) {
   return (
     <section className="np-container pb-8 pt-8 sm:pt-12 lg:pt-16">
-      <div className="np-surface relative overflow-hidden p-6 sm:p-8 lg:p-10">
-        <div className="absolute -right-24 -top-24 size-64 rounded-full bg-[color:rgb(122_22_58/0.12)] blur-3xl" />
-        <div className="absolute -bottom-28 right-14 size-64 rounded-full bg-[color:rgb(224_184_90/0.18)] blur-3xl" />
+      <div className="np-surface relative overflow-hidden p-6 sm:p-8 lg:p-10 xl:p-12">
+        <div className="absolute -right-20 top-0 size-64 rounded-full bg-[color:rgb(122_22_58/0.12)] blur-3xl" />
+        <div className="absolute -bottom-24 right-10 size-72 rounded-full bg-[color:rgb(224_184_90/0.18)] blur-3xl" />
 
-        <div className="relative z-10 grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
-              <Sparkles className="size-3.5" />
+        <div className="relative z-10 grid items-center gap-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-10">
+          <div className="max-w-xl">
+            <p className="text-sm font-medium italic tracking-[0.08em] text-primary/90 sm:text-base">
               {badge}
             </p>
 
-            <h1 className="font-heading mt-5 text-3xl leading-tight font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+            <h1 className="font-heading mt-4 text-3xl leading-tight font-bold tracking-tight text-foreground sm:text-4xl lg:text-[3.25rem]">
               {title}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg">
               {body}
-            </p>
-            <p className="mt-3 text-sm font-medium text-foreground/80 sm:text-base">
-              {note}
             </p>
 
             <LiveCounterPill className="mt-5" />
@@ -75,7 +69,7 @@ export function HeroSection({
               <TrackedButtonLink
                 href={secondaryCta.href}
                 eventName="cta_click"
-                eventParams={{ placement: "hero", cta: "explore_program" }}
+                eventParams={{ placement: "hero", cta: "book_career_consultation" }}
                 variant="outline"
                 size="lg"
                 className="h-11"
@@ -88,7 +82,7 @@ export function HeroSection({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative min-h-[360px] sm:min-h-[430px] lg:min-h-[560px]">
             <div className="absolute -inset-4 rounded-3xl bg-[radial-gradient(circle_at_30%_25%,rgba(122,22,58,0.24),transparent_65%)] blur-xl" />
             {isLocalImageSrc(imageSrc) ? (
               <Image
@@ -96,7 +90,7 @@ export function HeroSection({
                 alt="Nurse coaching discussion at Nurse Prism"
                 width={1600}
                 height={1000}
-                className="relative z-10 h-full w-full rounded-2xl object-cover shadow-[0_30px_70px_-42px_rgba(15,10,12,0.8)]"
+                className="relative z-10 h-full w-full rounded-[1.75rem] object-cover object-center shadow-[0_30px_70px_-42px_rgba(15,10,12,0.8)]"
                 priority
               />
             ) : (
@@ -104,7 +98,7 @@ export function HeroSection({
               <img
                 src={imageSrc}
                 alt="Nurse coaching discussion at Nurse Prism"
-                className="relative z-10 h-full w-full rounded-2xl object-cover shadow-[0_30px_70px_-42px_rgba(15,10,12,0.8)]"
+                className="relative z-10 h-full w-full rounded-[1.75rem] object-cover object-center shadow-[0_30px_70px_-42px_rgba(15,10,12,0.8)]"
               />
             )}
           </div>

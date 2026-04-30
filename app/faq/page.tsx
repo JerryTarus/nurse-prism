@@ -5,16 +5,16 @@ import { FAQ_ITEMS } from "@/data/faqs"
 import { createManagedPageMetadata } from "@/lib/seo/metadata"
 import { createFaqSchema } from "@/lib/seo/structured-data"
 
-const categories = ["Program", "Pricing", "Relocation", "Coaching"] as const
+const categories = ["Program", "Pricing", "Global Pathways", "Coaching"] as const
 
 export async function generateMetadata(): Promise<Metadata> {
   return createManagedPageMetadata({
     pageKey: "faq",
     title: "FAQ",
     description:
-      "Find answers to common Nurse Prism questions about pricing, coaching, relocation strategy, and the 5P program journey.",
+      "Find answers to common Nurse Prism questions about pricing, coaching, global pathways, and the 5P program journey.",
     path: "/faq",
-    keywords: ["nurse prism faq", "nursing coaching questions", "relocation faq"],
+    keywords: ["nurse prism faq", "nursing coaching questions", "global nursing pathways"],
   })
 }
 
@@ -31,8 +31,8 @@ export default function FaqPage() {
           Frequently asked questions
         </h1>
         <p className="mt-3 max-w-3xl text-muted-foreground">
-          Answers to common questions about coaching, pricing, relocation
-          strategy, and the Nurse Prism program.
+          Answers to common questions about coaching, pricing, global career
+          pathways, and the Nurse Prism program.
         </p>
       </div>
 

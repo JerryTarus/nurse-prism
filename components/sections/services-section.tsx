@@ -23,8 +23,7 @@ export function ServicesSection({
   mode = "preview",
   heading,
 }: ServicesSectionProps) {
-  const visibleServices =
-    mode === "preview" ? CORE_SERVICES.slice(0, 3) : CORE_SERVICES
+  const visibleServices = CORE_SERVICES
 
   return (
     <section className="np-container py-10 sm:py-12">
@@ -38,7 +37,7 @@ export function ServicesSection({
           </h2>
           <p className="mt-2 max-w-3xl text-muted-foreground">
             {heading?.content ??
-              "Choose focused coaching for clarity, LinkedIn strategy, remote roles, global opportunities, and confident career decisions."}
+              "Choose focused support for clarity, LinkedIn strategy, remote transitions, and international career opportunities."}
           </p>
         </div>
         {mode === "preview" ? (

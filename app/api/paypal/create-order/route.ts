@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 import {
   createPaymentRecord,
   getCheckoutAmountForBooking,
+  getReusablePaymentForBooking,
 } from "@/lib/cms/public"
 import { createHostedPaypalOrder } from "@/lib/paypal/orders"
 import { enforceRateLimit, getRequestIp } from "@/lib/security/rate-limit"
@@ -50,6 +51,21 @@ export async function POST(request: Request) {
     const { booking, plan, checkoutAmount } = await getCheckoutAmountForBooking(
       parsed.data.bookingId
     )
+    const reusablePayment = await getReusablePaymentForBooking(booking.id)
+
+    if (reusablePayment) {
+      return NextResponse.json(
+        {
+          bookingId: booking.id,
+          paymentId: reusablePayment.id,
+          orderId: reusablePayment.providerOrderId,
+          approvalUrl: reusablePayment.approvalUrl,
+          currency: "USD",
+          checkoutAmount: reusablePayment.checkoutAmount ?? checkoutAmount,
+        },
+        { status: 200 }
+      )
+    }
 
     const order = await createHostedPaypalOrder({
       bookingId: booking.id,
@@ -79,12 +95,10 @@ export async function POST(request: Request) {
       { status: 201 }
     )
   } catch (error) {
+    console.error("Failed to create PayPal order", error)
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unable to start PayPal checkout right now.",
+        error: "We couldn't start checkout right now. Please try again in a moment.",
       },
       { status: 500 }
     )

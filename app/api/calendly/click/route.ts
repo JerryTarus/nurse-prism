@@ -47,12 +47,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result, { status: 200 })
   } catch (error) {
+    console.error("Failed to continue to Calendly", error)
     return NextResponse.json(
       {
         error:
-          error instanceof Error
-            ? error.message
-            : "Unable to open Calendly right now.",
+          "Something went wrong while preparing your booking. Please try again or contact support.",
       },
       { status: 500 }
     )

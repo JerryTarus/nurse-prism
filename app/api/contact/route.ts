@@ -53,12 +53,10 @@ export async function POST(request: Request) {
       { status: 201 }
     )
   } catch (error) {
+    console.error("Failed to create contact submission", error)
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unable to send your message right now.",
+        error: "We couldn't save your details right now. Please try again.",
       },
       { status: 500 }
     )

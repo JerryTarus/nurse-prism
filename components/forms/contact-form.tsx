@@ -39,7 +39,11 @@ export function ContactForm() {
         | null
 
       if (!response.ok) {
-        throw new Error(payload?.error ?? "Request failed")
+        console.error("Contact form submission failed", {
+          status: response.status,
+          payload,
+        })
+        throw new Error("contact_submit_failed")
       }
 
       setStatus("success")
@@ -52,12 +56,9 @@ export function ContactForm() {
       })
       setForm(initialState)
     } catch (error) {
+      console.error("Contact form request failed", error)
       setStatus("error")
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Submission failed. Please try again shortly."
-      )
+      setMessage("We couldn't save your details right now. Please try again.")
     }
   }
 

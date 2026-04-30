@@ -23,7 +23,7 @@ export const TESTIMONIALS: Testimonial[] = [
     role: "ICU Nurse",
     country: "UAE",
     quote:
-      "The Professional Plan helped me present my experience properly. My CV and interview story became clear and powerful.",
+      "The Professional Pivot helped me present my experience properly. My CV and interview story became clear and powerful.",
     result: "Moved to Abu Dhabi with a stronger compensation package.",
   },
   {

@@ -31,14 +31,14 @@ export function AboutPreviewSection({
             alt="Nurse Prism founder portrait"
             width={900}
             height={1100}
-            className="h-full min-h-72 w-full rounded-2xl object-cover"
+            className="aspect-[4/5] h-full min-h-72 w-full rounded-2xl object-cover object-top"
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={imageSrc}
             alt="Nurse Prism founder portrait"
-            className="h-full min-h-72 w-full rounded-2xl object-cover"
+            className="aspect-[4/5] h-full min-h-72 w-full rounded-2xl object-cover object-top"
           />
         )}
 

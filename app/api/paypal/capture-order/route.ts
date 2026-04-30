@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 import {
-  getBookingForPayment,
+  getCheckoutAmountForBooking,
   getPaymentByProviderOrderId,
   markPaymentCaptured,
 } from "@/lib/cms/public"
@@ -20,6 +20,19 @@ const PAYPAL_CAPTURE_RATE_LIMIT = {
 
 function toTopLevelStatus(value: unknown) {
   return typeof value === "string" ? value : null
+}
+
+function normalizeUsdAmount(value: string | null) {
+  if (!value) {
+    return null
+  }
+
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed)) {
+    return null
+  }
+
+  return parsed.toFixed(2)
 }
 
 export async function POST(request: Request) {
@@ -56,12 +69,21 @@ export async function POST(request: Request) {
   }
 
   try {
-    const booking = await getBookingForPayment(parsed.data.bookingId)
+    const { booking, checkoutAmount } = await getCheckoutAmountForBooking(
+      parsed.data.bookingId
+    )
     const calendlyUrl = getCalendlyUrlForIntent(booking.intent)
 
     if (!calendlyUrl) {
+      console.error("Calendly URL missing for paid booking capture", {
+        bookingId: parsed.data.bookingId,
+        intent: booking.intent,
+      })
       return NextResponse.json(
-        { error: "Calendly is not configured for this paid booking." },
+        {
+          error:
+            "Scheduling is not available right now. Please contact Nurse Prism for help with your booking.",
+        },
         { status: 500 }
       )
     }
@@ -94,6 +116,14 @@ export async function POST(request: Request) {
       )
     }
 
+    const capturedAmount = normalizeUsdAmount(captureDetails.amount)
+    if (captureDetails.currency !== "USD" || capturedAmount !== checkoutAmount) {
+      return NextResponse.json(
+        { error: "The captured PayPal amount did not match this booking." },
+        { status: 422 }
+      )
+    }
+
     await markPaymentCaptured({
       bookingId: parsed.data.bookingId,
       paymentId: payment.id,
@@ -101,7 +131,6 @@ export async function POST(request: Request) {
       captureId: captureDetails.captureId,
       captureStatus: captureDetails.status,
       capturePayload: captureOrder,
-      calendlyUrl,
     })
 
     return NextResponse.json(
@@ -109,17 +138,16 @@ export async function POST(request: Request) {
         bookingId: parsed.data.bookingId,
         calendlyUrl,
         message:
-          "Payment confirmed. Continue to Calendly to choose your paid strategy session slot.",
+          "Payment confirmed. Continue to Calendly to choose your career clarity session slot.",
       },
       { status: 200 }
     )
   } catch (error) {
+    console.error("Failed to capture PayPal order", error)
     return NextResponse.json(
       {
         error:
-          error instanceof Error
-            ? error.message
-            : "Unable to confirm the PayPal payment right now.",
+          "We couldn't confirm your payment right now. Please try again in a moment.",
       },
       { status: 500 }
     )

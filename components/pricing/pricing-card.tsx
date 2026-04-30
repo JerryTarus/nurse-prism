@@ -3,21 +3,20 @@ import { CheckCircle2 } from "lucide-react"
 import { TrackedButtonLink } from "@/components/analytics/tracked-button-link"
 import { formatCurrencyAmount } from "@/lib/currency"
 import { cn } from "@/lib/utils"
-import type { PricingPlan, SupportedCurrency } from "@/types/pricing"
+import type { PricingPlan } from "@/types/pricing"
 
 import { PricingBadge } from "./pricing-badge"
 
 type PricingCardProps = {
   plan: PricingPlan
-  currency: SupportedCurrency
   className?: string
 }
 
-export function PricingCard({ plan, currency, className }: PricingCardProps) {
+export function PricingCard({ plan, className }: PricingCardProps) {
+  const isFreePlan = plan.basePriceKes === 0
   const priceText =
-    plan.basePriceKes === 0
-      ? "Free"
-      : formatCurrencyAmount(plan.basePriceKes, currency, currency !== "KES")
+    isFreePlan ? "Free" : formatCurrencyAmount(plan.basePriceKes, "USD")
+  const ctaLabel = isFreePlan ? plan.ctaLabel : "Proceed to Secure Checkout"
 
   return (
     <article
@@ -40,7 +39,9 @@ export function PricingCard({ plan, currency, className }: PricingCardProps) {
 
       <p className="mt-5 font-heading text-3xl font-semibold text-primary">{priceText}</p>
       <p className="mt-1 text-xs text-muted-foreground">
-        {currency === "KES" ? "Billed in Kenyan Shillings" : "Estimated local value"}
+        {isFreePlan
+          ? "No payment required to reserve this call."
+          : "Secure checkout handled in USD."}
       </p>
 
       <ul className="mt-5 space-y-2.5 text-sm text-foreground/90">
@@ -62,7 +63,7 @@ export function PricingCard({ plan, currency, className }: PricingCardProps) {
         }}
         className="mt-6 w-full"
       >
-        {plan.ctaLabel}
+        {ctaLabel}
       </TrackedButtonLink>
     </article>
   )

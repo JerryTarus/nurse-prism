@@ -11,7 +11,7 @@ export const CORE_SERVICES: ServiceItem[] = [
     id: "career-clarity",
     title: "Career Clarity & Nurse Pivot Strategy",
     description:
-      "Clarify the next chapter that fits your values, lifestyle, strengths, and long-term professional goals.",
+      "Clarify the next chapter that fits your values, strengths, and long-term goals.",
     outcomes: [
       "Clear next-step strategy",
       "Aligned role and market direction",
@@ -48,9 +48,9 @@ export const CORE_SERVICES: ServiceItem[] = [
   },
   {
     id: "global-opportunities",
-    title: "Global Nursing Pathways",
+    title: "International Career Pathway Support",
     description:
-      "Map realistic options across the US, UK, Canada, Australia, the Middle East, and Europe with practical next steps.",
+      "Get structured support for global opportunities across the US, UK, Canada, Australia, Europe, and the Middle East.",
     outcomes: [
       "Market and pathway comparison",
       "Readiness and licensing planning",
@@ -60,17 +60,17 @@ export const CORE_SERVICES: ServiceItem[] = [
       "Nurses considering relocation or international mobility and wanting a safer, more strategic approach.",
   },
   {
-    id: "interview-offer-support",
-    title: "Interview, Offer & Decision Coaching",
+    id: "career-program",
+    title: "Nurse Prism Career Program",
     description:
-      "Prepare for interviews, evaluate opportunities, and make confident career decisions without rushing into the wrong move.",
+      "Move through a guided coaching framework that builds clarity, positioning, visibility, and steady execution over time.",
     outcomes: [
-      "Interview confidence and structure",
-      "Offer evaluation support",
-      "Stronger negotiation and decision clarity",
+      "Structured 5P transformation journey",
+      "Longer-term coaching accountability",
+      "Clear momentum across your pivot goals",
     ],
     idealFor:
-      "Nurses actively applying, interviewing, or weighing major career transitions across multiple directions.",
+      "Nurses who want a deeper, more supported transition plan instead of one-off advice.",
   },
 ]
 

@@ -45,7 +45,7 @@ export default async function ProgramPage() {
   const intro = resolvePublicSection(sections, "intro", {
     title: "The Nurse Prism Program for confident career transitions beyond the bedside",
     content:
-      "A guided, high-touch coaching journey built around the Nurse Prism 5P Framework to move you from uncertainty to intentional, measurable progress.",
+      "A guided, high-touch coaching journey built around the Nurse Prism 5P Framework to move you from uncertainty to intentional, measurable progress across remote, tech, international, and non-traditional career paths.",
   })
   const outcomesIntro = resolvePublicSection(sections, "outcomes", {
     title: "Program outcomes",
@@ -60,7 +60,7 @@ export default async function ProgramPage() {
   const investment = resolvePublicSection(sections, "investment", {
     title: "Program investment",
     content:
-      "Choose the program tier that matches the depth of coaching and accountability you need right now.",
+      "Choose the program tier that matches the depth of coaching and accountability you need right now. All pricing is shown in USD for a simpler, more transparent checkout experience.",
   })
 
   return (

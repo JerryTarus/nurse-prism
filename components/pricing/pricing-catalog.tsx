@@ -1,9 +1,6 @@
-"use client"
-
-import { useCurrency } from "@/hooks/use-currency"
+import { PUBLIC_USD_PRICING_DISCLAIMER } from "@/lib/currency"
 import type { PricingCategory, PricingCategoryId } from "@/types/pricing"
 
-import { CurrencySwitcher } from "./currency-switcher"
 import { PricingCard } from "./pricing-card"
 
 type PricingCatalogProps = {
@@ -15,23 +12,8 @@ export function PricingCatalog({
   highlightedCategory,
   pricingCategories,
 }: PricingCatalogProps) {
-  const { currency, setCurrency } = useCurrency("KES")
-
   return (
     <div className="space-y-10">
-      <div className="flex flex-col gap-4 rounded-2xl border border-border/80 bg-card/95 p-5 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="font-heading text-lg font-semibold text-foreground">
-            Choose your display currency
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Local currencies are shown as estimates using controlled Nurse Prism
-            planning rates.
-          </p>
-        </div>
-        <CurrencySwitcher value={currency} onChange={setCurrency} />
-      </div>
-
       {pricingCategories.map((category) => (
         <section
           key={category.id}
@@ -54,7 +36,6 @@ export function PricingCatalog({
               <PricingCard
                 key={plan.id}
                 plan={plan}
-                currency={currency}
                 className={
                   highlightedCategory === category.id && plan.isPopular
                     ? "ring-1 ring-primary/40"
@@ -67,9 +48,7 @@ export function PricingCatalog({
       ))}
 
       <p className="rounded-xl border border-border bg-card/80 px-4 py-3 text-xs leading-5 text-muted-foreground">
-        Currency values in USD, QAR, AED, and SAR are estimates for planning and
-        may differ slightly at checkout due to processor conditions and billing
-        settings.
+        {PUBLIC_USD_PRICING_DISCLAIMER}
       </p>
     </div>
   )

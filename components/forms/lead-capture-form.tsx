@@ -35,7 +35,11 @@ export function LeadCaptureForm({ className }: LeadCaptureFormProps) {
         | null
 
       if (!response.ok) {
-        throw new Error(payload?.error ?? "Request failed")
+        console.error("Newsletter signup failed", {
+          status: response.status,
+          payload,
+        })
+        throw new Error("newsletter_signup_failed")
       }
 
       setStatus("success")
@@ -48,12 +52,9 @@ export function LeadCaptureForm({ className }: LeadCaptureFormProps) {
       })
       setEmail("")
     } catch (error) {
+      console.error("Newsletter request failed", error)
       setStatus("error")
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "We could not submit right now. Please try again shortly."
-      )
+      setMessage("We couldn't save your details right now. Please try again.")
     }
   }
 

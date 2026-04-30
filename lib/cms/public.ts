@@ -131,7 +131,6 @@ export async function createConsultationLead(input: ConsultationLeadPayload) {
       target_country: input.targetCountry,
       package_key: plan?.id ?? null,
       payment_status: paymentRequired ? "pending" : "not_required",
-      calendly_url: calendlyUrl,
       notes: input.notes,
     })
     .select("id,intent,email,full_name,package_key,payment_status")
@@ -278,6 +277,50 @@ export async function createPaymentRecord(input: {
   return data
 }
 
+export async function getReusablePaymentForBooking(bookingId: string) {
+  const client = getPublicWriteClient()
+
+  const { data, error } = (await client
+    .from("payments")
+    .select("id,status,provider_order_id,approval_url,checkout_amount")
+    .eq("booking_id", bookingId)
+    .order("created_at", {
+      ascending: false,
+    })) as QueryRowsResponse<Record<string, unknown>>
+
+  if (error) {
+    throw new Error(
+      getErrorMessage(error, "Unable to review the current checkout state.")
+    )
+  }
+
+  const reusablePayment = (data ?? []).find((payment) => {
+    return (
+      toRequiredString(payment.status) === "created" &&
+      !!toNullableString(payment.provider_order_id) &&
+      !!toNullableString(payment.approval_url)
+    )
+  })
+
+  if (!reusablePayment) {
+    return null
+  }
+
+  const checkoutAmountValue = reusablePayment.checkout_amount
+
+  return {
+    id: toRequiredString(reusablePayment.id),
+    providerOrderId: toRequiredString(reusablePayment.provider_order_id),
+    approvalUrl: toRequiredString(reusablePayment.approval_url),
+    checkoutAmount:
+      typeof checkoutAmountValue === "number" && Number.isFinite(checkoutAmountValue)
+        ? checkoutAmountValue.toFixed(2)
+        : typeof checkoutAmountValue === "string"
+          ? checkoutAmountValue
+          : null,
+  }
+}
+
 export async function getPaymentByProviderOrderId(input: {
   bookingId: string
   orderId: string
@@ -311,7 +354,6 @@ export async function markPaymentCaptured(input: {
   captureId: string | null
   captureStatus: string | null
   capturePayload: unknown
-  calendlyUrl: string | null
 }) {
   const client = getPublicWriteClient()
 
@@ -338,7 +380,6 @@ export async function markPaymentCaptured(input: {
     .update({
       payment_status: "paid",
       payment_completed_at: new Date().toISOString(),
-      calendly_url: input.calendlyUrl,
     })
     .eq("id", input.bookingId)
     .select("id")
@@ -374,7 +415,6 @@ export async function markCalendlyClick(input: { bookingId: string }) {
     .from("bookings")
     .update({
       calendly_clicked_at: new Date().toISOString(),
-      calendly_url: calendlyUrl,
     })
     .eq("id", input.bookingId)
     .select("id")
