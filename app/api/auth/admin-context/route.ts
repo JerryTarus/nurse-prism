@@ -4,7 +4,7 @@ import { resolveAuthAccess } from "@/lib/auth/access"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { buildAdminContextPayload } from "@/lib/auth/admin-context"
 
-export async function GET(request: Request) {
+export async function GET() {
   const supabase = await createSupabaseServerClient()
   const [
     {
