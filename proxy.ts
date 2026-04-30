@@ -9,8 +9,8 @@ function cloneSupabaseCookies(
   source: NextResponse,
   target: NextResponse
 ): NextResponse {
-  source.cookies.getAll().forEach((cookie) => {
-    target.cookies.set(cookie.name, cookie.value)
+  source.cookies.getAll().forEach(({ name, value, ...options }) => {
+    target.cookies.set(name, value, options)
   })
   return target
 }
@@ -38,9 +38,16 @@ export async function proxy(request: NextRequest) {
   const access = resolveAuthAccess(user, session)
   const requestedPath = `${pathname}${request.nextUrl.search}`
 
-  if ((isAdminPath || isMfaPath) && (!access.isAuthenticated || !access.isAdmin)) {
+  if ((isAdminPath || isMfaPath) && !access.isAuthenticated) {
     const loginUrl = new URL("/auth/login", request.url)
     loginUrl.searchParams.set("next", requestedPath)
+    return cloneSupabaseCookies(response, NextResponse.redirect(loginUrl))
+  }
+
+  if ((isAdminPath || isMfaPath) && !access.isAdmin) {
+    const loginUrl = new URL("/auth/login", request.url)
+    loginUrl.searchParams.set("next", requestedPath)
+    loginUrl.searchParams.set("error", "forbidden")
     return cloneSupabaseCookies(response, NextResponse.redirect(loginUrl))
   }
 

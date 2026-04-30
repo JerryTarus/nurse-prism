@@ -7,7 +7,7 @@ import { ShieldCheck } from "lucide-react"
 type AdminContextPayload = {
   canAccessAdmin: boolean
   isSuperAdmin: boolean
-  lastAdminPath: string
+  adminPath: string
 }
 
 export function AdminReturnPill() {
@@ -52,7 +52,7 @@ export function AdminReturnPill() {
   return (
     <div className="fixed right-4 bottom-20 z-40 hidden md:block">
       <Link
-        href={context.lastAdminPath || "/admin"}
+        href={context.adminPath}
         className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card px-3 py-2 text-xs font-medium text-primary shadow-[0_18px_35px_-20px_rgba(91,14,45,0.78)] transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <ShieldCheck className="size-4" />
