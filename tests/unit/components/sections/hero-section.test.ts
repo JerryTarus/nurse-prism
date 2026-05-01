@@ -68,6 +68,8 @@ describe("HeroSection", () => {
     expect(html).toContain("font-serif")
     expect(html).toContain("italic")
     expect(html).toContain("lg:grid-cols-2")
+    expect(html).toContain("lg:h-[460px]")
+    expect(html).toContain("xl:h-[500px]")
     expect(html).toContain("object-contain")
     expect(html).toContain(HERO_TRUST_LINE)
     expect(html).not.toContain("Global Opportunities")

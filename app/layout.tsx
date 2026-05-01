@@ -31,6 +31,9 @@ export const metadata: Metadata = {
   ...rootMetadata,
   metadataBase,
   applicationName: SITE_CONFIG.name,
+  icons: {
+    icon: "/favicon.svg",
+  },
   title: {
     default: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
     template: `%s | ${SITE_CONFIG.name}`,

@@ -44,5 +44,7 @@ describe("ServicesSection", () => {
     expect(html).toContain("md:grid-cols-2")
     expect(html).toContain("xl:grid-cols-6")
     expect(html).toContain("xl:col-span-3")
+    expect(html).toContain("bg-[color:var(--np-deep-burgundy)]")
+    expect(html).toContain("text-white")
   })
 })

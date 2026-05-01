@@ -2,7 +2,7 @@ import { TESTIMONIALS } from "@/data/testimonials"
 
 export function TestimonialsSection() {
   return (
-    <section className="np-container py-10 sm:py-12">
+    <section className="np-container py-8 sm:py-10">
       <div>
         <p className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
           Real Progress

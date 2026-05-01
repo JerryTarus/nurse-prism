@@ -23,8 +23,8 @@ export function AboutPreviewSection({
   const [firstParagraph, secondParagraph] = paragraphs
 
   return (
-    <section className="np-container py-8 sm:py-10">
-      <div className="grid items-center gap-6 rounded-3xl border border-border/80 bg-card/95 p-5 shadow-[0_20px_55px_-38px_rgba(15,10,12,0.72)] sm:p-8 lg:grid-cols-[0.95fr_1.05fr]">
+    <section className="np-container py-7 sm:py-9">
+      <div className="grid items-center gap-5 rounded-3xl border border-border/80 bg-card/95 p-5 shadow-[0_20px_55px_-38px_rgba(15,10,12,0.72)] sm:p-6 lg:grid-cols-[0.95fr_1.05fr] lg:p-7">
         {isLocalImageSrc(imageSrc) ? (
           <Image
             src={imageSrc}
@@ -43,9 +43,13 @@ export function AboutPreviewSection({
         )}
 
         <div>
-          <p className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
-            Founder-led coaching
-          </p>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[color:rgb(122_22_58/0.16)] bg-white/76 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--np-rich-wine)] shadow-[0_16px_34px_-26px_rgba(40,8,22,0.55)] backdrop-blur-sm sm:text-xs">
+            <span
+              aria-hidden="true"
+              className="size-2 rounded-full bg-[color:var(--np-warm-gold)]"
+            />
+            Founder Led Coaching
+          </div>
           <h2 className="font-heading mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
             {title}
           </h2>

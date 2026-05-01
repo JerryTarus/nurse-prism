@@ -76,7 +76,7 @@ export default async function HomePage() {
         imageSrc={resolvePublicSetting(
           settings,
           "appearance.hero",
-          "/images/hero/nurse-prism-hero.webp"
+          "/images/hero/nurse-prism-hero.svg"
         )}
         primaryCta={{
           label: "Start Your Nurse Pivot",

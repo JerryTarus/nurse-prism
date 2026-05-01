@@ -34,7 +34,7 @@ export function ServicesSection({
   const isPreview = mode === "preview"
 
   return (
-    <section className="np-container py-10 sm:py-12">
+    <section className={isPreview ? "np-container py-8 sm:py-10" : "np-container py-10 sm:py-12"}>
       <div className={isPreview ? "max-w-3xl" : ""}>
         <p className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
           Services
@@ -55,7 +55,7 @@ export function ServicesSection({
       </div>
 
       {isPreview ? (
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
+        <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
           {visibleServices.map((service, index) => {
             const Icon = iconMap[service.id]
 
@@ -63,7 +63,7 @@ export function ServicesSection({
               <article
                 key={service.id}
                 className={[
-                  "rounded-[1.75rem] border border-[color:rgb(231_216_221/0.88)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,247,0.98))] p-6 shadow-[0_24px_60px_-42px_rgba(40,8,22,0.42)]",
+                  "rounded-[1.75rem] border border-[color:rgb(231_216_221/0.88)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,247,0.98))] p-5 shadow-[0_24px_60px_-42px_rgba(40,8,22,0.42)] sm:p-6",
                   index >= 3 ? "xl:col-span-3" : "xl:col-span-2",
                 ].join(" ")}
               >
@@ -128,14 +128,13 @@ export function ServicesSection({
       )}
 
       {isPreview ? (
-        <div className="mt-8 flex justify-center lg:justify-start">
+        <div className="mt-7 flex justify-center lg:justify-start">
           <TrackedButtonLink
             href="/services"
             eventName="cta_click"
             eventParams={{ placement: "services_preview", cta: "explore_all_services" }}
-            variant="outline"
             size="lg"
-            className="h-11 rounded-full border-[color:rgb(122_22_58/0.16)] bg-white/72 px-5 text-[color:var(--np-rich-wine)] shadow-[0_20px_44px_-34px_rgba(40,8,22,0.48)] hover:bg-white"
+            className="h-11 rounded-full bg-[color:var(--np-rich-wine)] px-8 text-sm font-semibold text-white shadow-[0_20px_44px_-30px_rgba(91,14,45,0.64)] hover:bg-[color:var(--np-deep-burgundy)]"
           >
             Explore All Services
           </TrackedButtonLink>
